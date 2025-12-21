@@ -23,7 +23,7 @@ jobs:
         cache: maven
         
     - name: Build with Maven
-      run: mvn clean compile --batch-mode
+      run: chmod +x ./mvnw && ./mvnw clean compile --batch-mode
 
   test:
     name: Run Tests
@@ -57,14 +57,14 @@ jobs:
         cache: maven
         
     - name: Run tests
-      run: mvn test --batch-mode
+      run: chmod +x ./mvnw && ./mvnw test --batch-mode
       env:
         SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/music_store_test
         SPRING_DATASOURCE_USERNAME: test
         SPRING_DATASOURCE_PASSWORD: test
         
     - name: Generate coverage report
-      run: mvn jacoco:report --batch-mode
+      run: ./mvnw jacoco:report --batch-mode
       
     - name: Upload coverage to Codecov (optional)
       uses: codecov/codecov-action@v3
@@ -105,7 +105,7 @@ jobs:
         cache: maven
         
     - name: Run Checkstyle
-      run: mvn checkstyle:check --batch-mode
+      run: ./mvnw checkstyle:check --batch-mode
       continue-on-error: true
       
     - name: Upload Checkstyle results
