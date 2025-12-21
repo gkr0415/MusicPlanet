@@ -9,7 +9,7 @@ This is a university project demonstrating production-ready software development
 - Relational database design with complex relationships
 - RESTful API with comprehensive documentation
 - Automated testing with high coverage (80%+)
-- **CI/CD pipeline with GitLab** for continuous integration
+- **CI/CD pipeline with GitHub Actions** for continuous integration
 - Docker containerization for deployment
 
 ## 🎯 Features
@@ -27,25 +27,25 @@ This is a university project demonstrating production-ready software development
 - **REST API**: 30+ endpoints with Swagger documentation
 - **Testing**: Unit, Integration, and Repository tests (80%+ coverage)
 - **CI/CD**: Automated build, test, and quality checks on every commit
-- **Code Quality**: Automated Checkstyle and ESLint validation
+- **Code Quality**: Automated Checkstyle validation
 - **DTOs & Mappers**: Clean separation with MapStruct
 - **Docker**: Containerized backend and frontend
 
 ## 🏗️ Architecture
 
-### Backend (Spring Boot 3.x)
+### Backend (Spring Boot 2.7)
 ```
 Controllers → Services → Repositories → Database
      ↓           ↓
    DTOs    Business Logic
 ```
 
-- **Framework**: Spring Boot 3.x with Java 17+
+- **Framework**: Spring Boot 2.7.18 with Java 11
 - **Database**: PostgreSQL 15
 - **ORM**: Spring Data JPA / Hibernate
 - **API Docs**: Springdoc OpenAPI (Swagger)
 - **Testing**: JUnit 5, Mockito, Spring Boot Test
-- **Coverage**: JaCoCo (80%+ required)
+- **Coverage**: JaCoCo (tracked, not enforced)
 - **Build**: Maven
 
 ### Frontend (React 18+)
@@ -61,7 +61,7 @@ Context   Hooks     Axios
 - **HTTP Client**: Axios
 - **UI**: Material-UI / TailwindCSS
 - **Testing**: Jest, React Testing Library
-- **Coverage**: 70%+ required
+- **Coverage**: Tracked (not enforced)
 
 ### Database Schema
 8 tables with proper relationships:
@@ -77,8 +77,8 @@ Context   Hooks     Axios
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Java 17+
-- Node.js 18+
+- Java 11+
+- Node.js 18+ (for frontend, when implemented)
 - PostgreSQL 15
 - Maven 3.9+
 - Git
@@ -134,31 +134,97 @@ Context   Hooks     Axios
 
 ## 🔄 CI/CD Pipeline
 
-The project includes a complete GitLab CI/CD pipeline that runs automatically on every commit:
+The project includes a complete **GitHub Actions** pipeline that runs automatically on every commit:
 
-### Pipeline Stages
-1. **Build** - Compile backend and frontend
-2. **Test** - Run all tests with coverage reports
-3. **Quality** - Code quality checks (Checkstyle, ESLint)
-4. **Package** - Build Docker images (main/develop branches only)
+### Pipeline Jobs
+1. **Build Backend** - Compile code with Maven
+2. **Run Tests** - Execute all tests with PostgreSQL service
+3. **Code Quality Checks** - Run Checkstyle validation
+4. **Pipeline Summary** - Display results
 
-### Setup CI/CD
+### How It Works
+- ✅ Runs automatically on push and pull requests
+- ✅ Must pass before merging (if branch protection enabled)
+- ✅ Generates test reports and coverage
+- ✅ Results visible in Pull Request checks
+
+### View Pipeline Results
+1. Go to **Pull Request** page
+2. Scroll to **"Checks"** section
+3. See all jobs and their status
+4. Click **"Details"** to view logs
+
+Or visit the **Actions** tab in your repository.
+
+---
+
+## 🛡️ Branch Protection Rules
+
+The `main` branch is protected with the following rules to ensure code quality:
+
+### Protection Settings
+
+#### ✅ Pull Request Requirements
+- **Require pull request before merging**: All changes must go through PR
+- **Require approvals**: Minimum 1 approval required
+- **Dismiss stale approvals**: Approvals reset when new commits are pushed
+
+#### ✅ Status Checks Required
+Before merging, these checks must pass:
+- ✅ **Build Backend** - Code must compile
+- ✅ **Run Tests** - All tests must pass
+- ✅ **Code Quality Checks** - Checkstyle validation
+- ✅ **Pipeline Summary** - Overall pipeline status
+
+#### ✅ Additional Protections
+- **Require branches to be up to date**: Must merge latest main first
+- **Automatically delete head branches**: Clean up after merge
+- **Do not allow bypassing**: Even admins must follow rules
+
+### How to Configure (For Repository Admins)
+
+1. Go to **Settings** → **Branches**
+2. Click **Add rule** for `main` branch
+3. Enable:
+   - ✅ Require a pull request before merging
+   - ✅ Require approvals (set to 1)
+   - ✅ Dismiss stale pull request approvals when new commits are pushed
+   - ✅ Require status checks to pass before merging
+   - ✅ Require branches to be up to date before merging
+   - Select all CI/CD checks (Build, Test, Quality, Summary)
+   - ✅ Do not allow bypassing the above settings
+   - ✅ Automatically delete head branches
+4. Click **Create** or **Save changes**
+
+### Development Workflow
+
 ```bash
-# Copy template to activate pipeline
-cp docs/.gitlab-ci.yml.template .gitlab-ci.yml
+# 1. Create feature branch
+git checkout -b feature/my-feature
 
-# Configure branch protection in GitLab
-# Settings → Repository → Branch Rules
-# - Require pipeline to pass before merge
-# - Require 1+ approval
+# 2. Make changes and commit
+git add .
+git commit -m "feat: Add new feature"
 
-# Push to trigger pipeline
-git add .gitlab-ci.yml
-git commit -m "ci: Enable CI/CD pipeline"
-git push
+# 3. Push to GitHub
+git push origin feature/my-feature
+
+# 4. Create Pull Request on GitHub
+# 5. Pipeline runs automatically ✅
+# 6. Request review from team member
+# 7. Address feedback if needed
+# 8. Once approved and checks pass → Merge!
 ```
 
-**See [CI/CD Guide](docs/CI_CD_GUIDE.md) for complete setup instructions.**
+### Pull Request Checklist
+
+Before your PR can be merged:
+- ✅ All CI/CD checks must pass (Build, Test, Quality)
+- ✅ At least 1 approval from team member
+- ✅ Branch must be up to date with main
+- ✅ All review comments addressed
+
+**Result**: Only high-quality, tested code makes it to `main`! 🎯
 
 ## 📚 Documentation
 
@@ -177,8 +243,8 @@ Comprehensive documentation is available in the `docs/` folder:
 ## 🧪 Testing
 
 ### Test Coverage Requirements
-- **Backend**: 80%+ coverage (enforced by CI/CD)
-- **Frontend**: 70%+ coverage (enforced by CI/CD)
+- **Backend**: Coverage tracked (not enforced)
+- **Frontend**: Coverage tracked (not enforced)
 
 ### Test Types
 - **Unit Tests**: Test individual components/services
@@ -222,7 +288,7 @@ npm run test:coverage             # Run with coverage
 ## 🛠️ Technology Stack
 
 ### Backend
-- Spring Boot 3.x
+- Spring Boot 2.7.18
 - Spring Data JPA
 - PostgreSQL 15
 - MapStruct
@@ -241,7 +307,7 @@ npm run test:coverage             # Run with coverage
 - React Testing Library
 
 ### DevOps
-- GitLab CI/CD
+- GitHub Actions
 - Docker & Docker Compose
 - Maven
 - npm
@@ -260,9 +326,9 @@ main (protected)
 ### Workflow
 1. Create feature branch from `main`
 2. Make changes and commit
-3. Push to GitLab (pipeline runs automatically)
-4. Create merge request
-5. Get code review approval
+3. Push to GitHub (pipeline runs automatically)
+4. Create Pull Request
+5. Get code review approval (minimum 1)
 6. Merge when pipeline passes ✅
 
 ## 🐳 Docker Deployment
@@ -301,16 +367,17 @@ This project fulfills all requirements:
 ## 🚀 Next Steps
 
 1. **Read Documentation**: Start with [START_HERE.md](START_HERE.md)
-2. **Setup CI/CD**: Follow [CI/CD Guide](docs/CI_CD_GUIDE.md)
-3. **Begin Development**: Follow [Project Plan](docs/PROJECT_PLAN.md)
-4. **Track Progress**: Use GitLab issues for each milestone
+2. **Configure Branch Protection**: See section above
+3. **Begin Development**: Implement backend entities and services
+4. **Follow Workflow**: Use feature branches and Pull Requests
 
 ## 📞 Support
 
 For questions or issues:
 1. Check the [documentation](docs/)
 2. Review [CI/CD Quick Reference](docs/CI_CD_QUICK_REFERENCE.md)
-3. Check GitLab CI/CD logs for pipeline failures
+3. Check GitHub Actions logs for pipeline failures
+4. Review Pull Request checks for specific errors
 
 ---
 
