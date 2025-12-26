@@ -148,14 +148,6 @@ The project includes a complete **GitHub Actions** pipeline that runs automatica
 - ✅ Generates test reports and coverage
 - ✅ Results visible in Pull Request checks
 
-### View Pipeline Results
-1. Go to **Pull Request** page
-2. Scroll to **"Checks"** section
-3. See all jobs and their status
-4. Click **"Details"** to view logs
-
-Or visit the **Actions** tab in your repository.
-
 ---
 
 ## 🛡️ Branch Protection Rules
@@ -180,21 +172,6 @@ Before merging, these checks must pass:
 - **Require branches to be up to date**: Must merge latest main first
 - **Automatically delete head branches**: Clean up after merge
 - **Do not allow bypassing**: Even admins must follow rules
-
-### How to Configure (For Repository Admins)
-
-1. Go to **Settings** → **Branches**
-2. Click **Add rule** for `main` branch
-3. Enable:
-   - ✅ Require a pull request before merging
-   - ✅ Require approvals (set to 1)
-   - ✅ Dismiss stale pull request approvals when new commits are pushed
-   - ✅ Require status checks to pass before merging
-   - ✅ Require branches to be up to date before merging
-   - Select all CI/CD checks (Build, Test, Quality, Summary)
-   - ✅ Do not allow bypassing the above settings
-   - ✅ Automatically delete head branches
-4. Click **Create** or **Save changes**
 
 ### Development Workflow
 
@@ -232,12 +209,8 @@ Comprehensive documentation is available in the `docs/` folder:
 
 | Document | Description |
 |----------|-------------|
-| [START_HERE.md](START_HERE.md) | **Start here** - Complete package overview |
-| [docs/README_DOCUMENTATION.md](docs/README_DOCUMENTATION.md) | Master documentation index |
 | [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md) | Complete project plan and architecture |
 | [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) | Database design with ERD and SQL |
-| [docs/CI_CD_GUIDE.md](docs/CI_CD_GUIDE.md) | Complete CI/CD setup and usage guide |
-| [docs/CI_CD_QUICK_REFERENCE.md](docs/CI_CD_QUICK_REFERENCE.md) | Quick reference for daily development |
 | [docs/PROJECT_VISUAL_SUMMARY.md](docs/PROJECT_VISUAL_SUMMARY.md) | Visual diagrams and summaries |
 
 ## 🧪 Testing
@@ -262,28 +235,6 @@ mvn jacoco:report                 # Generate coverage report
 npm test                          # Run all tests
 npm run test:coverage             # Run with coverage
 ```
-
-## 📊 Project Status
-
-### Current Phase
-- [ ] **Phase 0**: CI/CD Setup (In Progress)
-- [ ] **Phase 1**: Backend Foundation
-- [ ] **Phase 2**: Backend Services & API
-- [ ] **Phase 3**: Backend Testing
-- [ ] **Phase 4**: Frontend Setup
-- [ ] **Phase 5**: Frontend Development
-- [ ] **Phase 6**: Integration & Deployment
-
-### Requirements Checklist
-- [x] Many-to-Many relationship (Album ↔ Genre)
-- [x] Many-to-One relationships (4+ relationships)
-- [x] 5+ tables (8 tables planned)
-- [ ] Code separation (Controllers, Services, Repositories)
-- [ ] @Query annotations (5+ examples planned)
-- [ ] Tests (Unit, Integration, Repository)
-- [ ] Swagger API documentation
-- [ ] DTOs & Mappers (MapStruct)
-- [x] CI/CD Pipeline configuration
 
 ## 🛠️ Technology Stack
 
@@ -343,43 +294,7 @@ docker-compose up -d
 # PostgreSQL: localhost:5432
 ```
 
-## 👥 Team / Contributors
-
-- [Your Name] - Full Stack Developer
-
 ## 📝 License
 
 This project is for educational purposes (University Project).
-
-## 🎓 University Requirements
-
-This project fulfills all requirements:
-- ✅ Many-to-Many relationship (Album ↔ Genre)
-- ✅ Many-to-One relationships (Album→Artist, Song→Album, Order→Customer, OrderItem→Order/Album)
-- ✅ Minimum 5 tables (8 tables implemented)
-- ✅ Code separation (Controllers, Services, Repositories, DTOs, Mappers)
-- ✅ Custom @Query annotations (5+ examples)
-- ✅ Comprehensive testing (Unit, Integration, Repository)
-- ✅ Swagger API documentation
-- ✅ DTOs with MapStruct mappers
-- ✅ **BONUS: CI/CD Pipeline with automated testing**
-
-## 🚀 Next Steps
-
-1. **Read Documentation**: Start with [START_HERE.md](START_HERE.md)
-2. **Configure Branch Protection**: See section above
-3. **Begin Development**: Implement backend entities and services
-4. **Follow Workflow**: Use feature branches and Pull Requests
-
-## 📞 Support
-
-For questions or issues:
-1. Check the [documentation](docs/)
-2. Review [CI/CD Quick Reference](docs/CI_CD_QUICK_REFERENCE.md)
-3. Check GitHub Actions logs for pipeline failures
-4. Review Pull Request checks for specific errors
-
----
-
-**Built with ❤️ for learning and demonstrating production-ready development practices**
 
