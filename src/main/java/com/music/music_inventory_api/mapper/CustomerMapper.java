@@ -5,13 +5,21 @@ import com.music.music_inventory_api.dto.response.CustomerDetailResponse;
 import com.music.music_inventory_api.dto.response.CustomerResponse;
 import com.music.music_inventory_api.entity.Customer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {OrderMapper.class})
+@Mapper(componentModel = "spring", uses = { OrderMapper.class })
 public interface CustomerMapper {
 
     CustomerResponse toResponse(Customer customer);
 
+    @Mapping(target = "orders", ignore = true)
     CustomerDetailResponse toDetailResponse(Customer customer);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Customer toEntity(CreateCustomerRequest request);
+
+    List<CustomerResponse> toResponseList(List<Customer> customers);
 }

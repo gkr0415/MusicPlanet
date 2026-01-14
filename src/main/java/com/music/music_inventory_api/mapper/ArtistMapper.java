@@ -6,16 +6,25 @@ import com.music.music_inventory_api.dto.response.ArtistDetailResponse;
 import com.music.music_inventory_api.dto.response.ArtistResponse;
 import com.music.music_inventory_api.entity.Artist;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {AlbumMapper.class})
+@Mapper(componentModel = "spring", uses = { AlbumMapper.class })
 public interface ArtistMapper {
 
     ArtistResponse toResponse(Artist artist);
+    @Mapping(target = "albums", ignore = true)    ArtistDetailResponse toDetailResponse(Artist artist);
 
-    ArtistDetailResponse toDetailResponse(Artist artist);
-
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Artist toEntity(CreateArtistRequest request);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     void updateEntityFromRequest(UpdateArtistRequest request, @MappingTarget Artist artist);
+
+    List<ArtistResponse> toResponseList(List<Artist> artists);
 }

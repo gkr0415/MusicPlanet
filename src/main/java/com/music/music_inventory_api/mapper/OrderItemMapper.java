@@ -6,6 +6,8 @@ import com.music.music_inventory_api.entity.OrderItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface OrderItemMapper {
 
@@ -14,5 +16,13 @@ public interface OrderItemMapper {
     OrderItemResponse toResponse(OrderItem orderItem);
 
     @Mapping(source = "albumId", target = "album.id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "order", ignore = true)
+    @Mapping(target = "unitPrice", ignore = true)
+    @Mapping(target = "subtotal", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     OrderItem toEntity(CreateOrderItemRequest request);
+
+    List<OrderItemResponse> toResponseList(List<OrderItem> orderItems);
 }

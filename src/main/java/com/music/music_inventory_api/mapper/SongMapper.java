@@ -6,6 +6,8 @@ import com.music.music_inventory_api.entity.Song;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface SongMapper {
 
@@ -13,5 +15,10 @@ public interface SongMapper {
     SongResponse toResponse(Song song);
 
     @Mapping(source = "albumId", target = "album.id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     Song toEntity(CreateSongRequest request);
+
+    List<SongResponse> toResponseList(List<Song> songs);
 }
