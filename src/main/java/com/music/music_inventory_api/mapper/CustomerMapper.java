@@ -6,7 +6,7 @@ import com.music.music_inventory_api.dto.response.CustomerResponse;
 import com.music.music_inventory_api.entity.Customer;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {OrderMapper.class})
 public interface CustomerMapper {
 
     CustomerResponse toResponse(Customer customer);

@@ -8,7 +8,7 @@ import com.music.music_inventory_api.entity.Artist;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {AlbumMapper.class})
 public interface ArtistMapper {
 
     ArtistResponse toResponse(Artist artist);
