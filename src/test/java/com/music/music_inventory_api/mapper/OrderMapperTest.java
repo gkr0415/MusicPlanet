@@ -15,22 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderMapperTest
-{
+class OrderMapperTest {
 
     @Autowired
     private OrderMapper orderMapper;
 
     @Test
-    void shouldMapOrderToResponse()
-    {
+    void toResponse_withValidOrder_shouldReturnOrderResponse() {
+        // Arrange
         Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").build();
-
         Order order = Order.builder().id(1L).customer(customer).orderDate(LocalDateTime.now())
                 .totalAmount(new BigDecimal("99.99")).status(OrderStatus.PENDING).build();
 
+        // Act
         OrderResponse response = orderMapper.toResponse(order);
 
+        // Assert
         assertNotNull(response);
         assertEquals(order.getId(), response.getId());
         assertEquals(customer.getId(), response.getCustomerId());
@@ -40,18 +40,19 @@ class OrderMapperTest
     }
 
     @Test
-    void shouldMapOrderListToResponseList()
-    {
+    void toResponseList_withValidOrderList_shouldReturnResponseList() {
+        // Arrange
         Customer customer = Customer.builder().id(1L).firstName("Test").build();
-
         List<Order> orders = Arrays.asList(
                 Order.builder().id(1L).customer(customer).totalAmount(new BigDecimal("10.00"))
                         .status(OrderStatus.PENDING).build(),
                 Order.builder().id(2L).customer(customer).totalAmount(new BigDecimal("20.00"))
                         .status(OrderStatus.SHIPPED).build());
 
+        // Act
         List<OrderResponse> responses = orderMapper.toResponseList(orders);
 
+        // Assert
         assertNotNull(responses);
         assertEquals(2, responses.size());
         assertEquals(OrderStatus.PENDING, responses.get(0).getStatus());

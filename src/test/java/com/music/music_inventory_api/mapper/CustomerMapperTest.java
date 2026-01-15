@@ -12,20 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CustomerMapperTest
-{
+class CustomerMapperTest {
 
     @Autowired
     private CustomerMapper customerMapper;
 
     @Test
-    void shouldMapCustomerToResponse()
-    {
+    void toResponse_withValidCustomer_shouldReturnCustomerResponse() {
+        // Arrange
         Customer customer = Customer.builder().id(1L).email("test@example.com").firstName("John").lastName("Doe")
                 .phone("1234567890").city("New York").country("USA").build();
 
+        // Act
         CustomerResponse response = customerMapper.toResponse(customer);
 
+        // Assert
         assertNotNull(response);
         assertEquals(customer.getId(), response.getId());
         assertEquals(customer.getEmail(), response.getEmail());
@@ -35,14 +36,16 @@ class CustomerMapperTest
     }
 
     @Test
-    void shouldMapCreateRequestToEntity()
-    {
+    void toEntity_withValidCreateRequest_shouldReturnCustomerEntity() {
+        // Arrange
         CreateCustomerRequest request = CreateCustomerRequest.builder().email("jane@example.com").firstName("Jane")
                 .lastName("Smith").phone("0987654321").address("123 Main St").city("Los Angeles").country("USA")
                 .postalCode("90001").build();
 
+        // Act
         Customer customer = customerMapper.toEntity(request);
 
+        // Assert
         assertNotNull(customer);
         assertEquals(request.getEmail(), customer.getEmail());
         assertEquals(request.getFirstName(), customer.getFirstName());
@@ -51,14 +54,16 @@ class CustomerMapperTest
     }
 
     @Test
-    void shouldMapCustomerListToResponseList()
-    {
+    void toResponseList_withValidCustomerList_shouldReturnResponseList() {
+        // Arrange
         List<Customer> customers = Arrays.asList(
                 Customer.builder().id(1L).email("user1@test.com").firstName("User").lastName("One").build(),
                 Customer.builder().id(2L).email("user2@test.com").firstName("User").lastName("Two").build());
 
+        // Act
         List<CustomerResponse> responses = customerMapper.toResponseList(customers);
 
+        // Assert
         assertNotNull(responses);
         assertEquals(2, responses.size());
         assertEquals("User", responses.get(0).getFirstName());

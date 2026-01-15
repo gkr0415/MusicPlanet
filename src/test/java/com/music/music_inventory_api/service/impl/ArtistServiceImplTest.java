@@ -34,8 +34,7 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ArtistService Unit Tests")
-class ArtistServiceImplTest
-{
+class ArtistServiceImplTest {
 
     @Mock
     private ArtistRepository artistRepository;
@@ -60,8 +59,7 @@ class ArtistServiceImplTest
     private AlbumResponse albumResponse;
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         // Set up test data
         artist = new Artist();
         artist.setId(1L);
@@ -100,7 +98,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should create artist successfully")
-    void testCreateArtist_Success() {
+    void createArtist_withValidRequest_shouldReturnArtistResponse() {
         // Arrange
         when(artistMapper.toEntity(createRequest)).thenReturn(artist);
         when(artistRepository.save(artist)).thenReturn(artist);
@@ -121,7 +119,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should get artist by ID successfully")
-    void testGetArtistById_Success() {
+    void getArtistById_withExistingId_shouldReturnArtistResponse() {
         // Arrange
         when(artistRepository.findById(1L)).thenReturn(Optional.of(artist));
         when(artistMapper.toResponse(artist)).thenReturn(artistResponse);
@@ -140,7 +138,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should throw EntityNotFoundException when artist not found")
-    void testGetArtistById_NotFound() {
+    void getArtistById_withNonExistentId_shouldThrowEntityNotFoundException() {
         // Arrange
         when(artistRepository.findById(999L)).thenReturn(Optional.empty());
 
@@ -158,8 +156,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should get all artists with pagination")
-    void testGetAllArtists_Success()
-    {
+    void getAllArtists_withPageable_shouldReturnPagedArtists() {
         // Arrange
         Artist artist2 = new Artist();
         artist2.setId(2L);
@@ -191,7 +188,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should update artist successfully")
-    void testUpdateArtist_Success() {
+    void updateArtist_withExistingId_shouldReturnUpdatedArtist() {
         // Arrange
         when(artistRepository.findById(1L)).thenReturn(Optional.of(artist));
         doNothing().when(artistMapper).updateEntityFromRequest(updateRequest, artist);
@@ -213,7 +210,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should throw EntityNotFoundException when updating non-existent artist")
-    void testUpdateArtist_NotFound() {
+    void updateArtist_withNonExistentId_shouldThrowEntityNotFoundException() {
         // Arrange
         when(artistRepository.findById(999L)).thenReturn(Optional.empty());
 
@@ -231,7 +228,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should delete artist successfully")
-    void testDeleteArtist_Success() {
+    void deleteArtist_withExistingId_shouldDeleteSuccessfully() {
         // Arrange
         when(artistRepository.existsById(1L)).thenReturn(true);
         doNothing().when(artistRepository).deleteById(1L);
@@ -246,7 +243,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should throw EntityNotFoundException when deleting non-existent artist")
-    void testDeleteArtist_NotFound() {
+    void deleteArtist_withNonExistentId_shouldThrowEntityNotFoundException() {
         // Arrange
         when(artistRepository.existsById(999L)).thenReturn(false);
 
@@ -264,8 +261,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should get albums by artist successfully")
-    void testGetAlbumsByArtist_Success()
-    {
+    void getAlbumsByArtist_withExistingArtist_shouldReturnAlbums() {
         // Arrange
         Album album2 = new Album();
         album2.setId(2L);
@@ -298,7 +294,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should throw EntityNotFoundException when getting albums for non-existent artist")
-    void testGetAlbumsByArtist_ArtistNotFound() {
+    void getAlbumsByArtist_withNonExistentArtist_shouldThrowEntityNotFoundException() {
         // Arrange
         when(artistRepository.existsById(999L)).thenReturn(false);
 
@@ -316,7 +312,7 @@ class ArtistServiceImplTest
 
     @Test
     @DisplayName("Should return empty list when artist has no albums")
-    void testGetAlbumsByArtist_NoAlbums() {
+    void getAlbumsByArtist_withArtistHavingNoAlbums_shouldReturnEmptyList() {
         // Arrange
         when(artistRepository.existsById(1L)).thenReturn(true);
         when(albumRepository.findByArtistId(1L)).thenReturn(Arrays.asList());
