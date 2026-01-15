@@ -15,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderMapperTest {
+class OrderMapperTest
+{
 
     @Autowired
     private OrderMapper orderMapper;
 
     @Test
-    void toResponse_withValidOrder_shouldReturnOrderResponse() {
+    void toResponse_withValidOrder_shouldReturnOrderResponse()
+    {
         // Arrange
         Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").build();
         Order order = Order.builder().id(1L).customer(customer).orderDate(LocalDateTime.now())
@@ -40,7 +42,8 @@ class OrderMapperTest {
     }
 
     @Test
-    void toResponseList_withValidOrderList_shouldReturnResponseList() {
+    void toResponseList_withValidOrderList_shouldReturnResponseList()
+    {
         // Arrange
         Customer customer = Customer.builder().id(1L).firstName("Test").build();
         List<Order> orders = Arrays.asList(

@@ -26,7 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-public class ArtistControllerIntegrationTest {
+public class ArtistControllerIntegrationTest
+{
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,12 +38,14 @@ public class ArtistControllerIntegrationTest {
     private ArtistRepository artistRepository;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp()
+    {
         artistRepository.deleteAll();
     }
 
     @Test
-    public void createArtist_withValidRequest_shouldReturnCreatedArtist() throws Exception {
+    public void createArtist_withValidRequest_shouldReturnCreatedArtist() throws Exception
+    {
         // Arrange
         CreateArtistRequest request = new CreateArtistRequest();
         request.setName("The Beatles");
@@ -58,7 +61,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void createArtist_withMissingRequiredFields_shouldReturnBadRequest() throws Exception {
+    public void createArtist_withMissingRequiredFields_shouldReturnBadRequest() throws Exception
+    {
         // Arrange
         CreateArtistRequest request = new CreateArtistRequest();
         // Missing required name field
@@ -69,7 +73,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void getArtistById_withExistingId_shouldReturnArtist() throws Exception {
+    public void getArtistById_withExistingId_shouldReturnArtist() throws Exception
+    {
         // Arrange
         Artist artist = new Artist();
         artist.setName("Pink Floyd");
@@ -84,13 +89,15 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void getArtistById_withNonExistentId_shouldReturnNotFound() throws Exception {
+    public void getArtistById_withNonExistentId_shouldReturnNotFound() throws Exception
+    {
         // Arrange & Act & Assert
         mockMvc.perform(get("/api/artists/{id}", 9999L)).andExpect(status().isNotFound());
     }
 
     @Test
-    public void getAllArtists_withPagination_shouldReturnPagedArtists() throws Exception {
+    public void getAllArtists_withPagination_shouldReturnPagedArtists() throws Exception
+    {
         // Arrange
         Artist artist1 = new Artist();
         artist1.setName("Queen");
@@ -111,7 +118,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void updateArtist_withExistingId_shouldReturnUpdatedArtist() throws Exception {
+    public void updateArtist_withExistingId_shouldReturnUpdatedArtist() throws Exception
+    {
         // Arrange
         Artist artist = new Artist();
         artist.setName("David Bowie");
@@ -132,7 +140,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void updateArtist_withNonExistentId_shouldReturnNotFound() throws Exception {
+    public void updateArtist_withNonExistentId_shouldReturnNotFound() throws Exception
+    {
         // Arrange
         UpdateArtistRequest request = new UpdateArtistRequest();
         request.setName("Non-existent Artist");
@@ -143,7 +152,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void deleteArtist_withExistingId_shouldDeleteSuccessfully() throws Exception {
+    public void deleteArtist_withExistingId_shouldDeleteSuccessfully() throws Exception
+    {
         // Arrange
         Artist artist = new Artist();
         artist.setName("Artist to Delete");
@@ -158,13 +168,15 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void deleteArtist_withNonExistentId_shouldReturnNotFound() throws Exception {
+    public void deleteArtist_withNonExistentId_shouldReturnNotFound() throws Exception
+    {
         // Arrange & Act & Assert
         mockMvc.perform(delete("/api/artists/{id}", 9999L)).andExpect(status().isNotFound());
     }
 
     @Test
-    public void getArtistAlbums_withExistingArtist_shouldReturnAlbumsList() throws Exception {
+    public void getArtistAlbums_withExistingArtist_shouldReturnAlbumsList() throws Exception
+    {
         // Arrange
         Artist artist = new Artist();
         artist.setName("Test Artist");
@@ -179,7 +191,8 @@ public class ArtistControllerIntegrationTest {
     }
 
     @Test
-    public void getArtistAlbums_withNonExistentArtist_shouldReturnNotFound() throws Exception {
+    public void getArtistAlbums_withNonExistentArtist_shouldReturnNotFound() throws Exception
+    {
         // Arrange & Act & Assert
         mockMvc.perform(get("/api/artists/{id}/albums", 9999L)).andExpect(status().isNotFound());
     }

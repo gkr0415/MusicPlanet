@@ -34,7 +34,8 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ArtistService Unit Tests")
-class ArtistServiceImplTest {
+class ArtistServiceImplTest
+{
 
     @Mock
     private ArtistRepository artistRepository;
@@ -59,7 +60,8 @@ class ArtistServiceImplTest {
     private AlbumResponse albumResponse;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         // Set up test data
         artist = new Artist();
         artist.setId(1L);
@@ -156,7 +158,8 @@ class ArtistServiceImplTest {
 
     @Test
     @DisplayName("Should get all artists with pagination")
-    void getAllArtists_withPageable_shouldReturnPagedArtists() {
+    void getAllArtists_withPageable_shouldReturnPagedArtists()
+    {
         // Arrange
         Artist artist2 = new Artist();
         artist2.setId(2L);
@@ -261,7 +264,8 @@ class ArtistServiceImplTest {
 
     @Test
     @DisplayName("Should get albums by artist successfully")
-    void getAlbumsByArtist_withExistingArtist_shouldReturnAlbums() {
+    void getAlbumsByArtist_withExistingArtist_shouldReturnAlbums()
+    {
         // Arrange
         Album album2 = new Album();
         album2.setId(2L);

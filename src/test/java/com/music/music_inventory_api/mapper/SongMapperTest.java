@@ -13,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SongMapperTest {
+class SongMapperTest
+{
 
     @Autowired
     private SongMapper songMapper;
 
     @Test
-    void toResponse_withValidSong_shouldReturnSongResponse() {
+    void toResponse_withValidSong_shouldReturnSongResponse()
+    {
         // Arrange
         Album album = Album.builder().id(1L).title("Test Album").build();
         Song song = Song.builder().id(1L).title("Test Song").album(album).trackNumber(1).durationSeconds(180).build();
@@ -37,7 +39,8 @@ class SongMapperTest {
     }
 
     @Test
-    void toEntity_withValidCreateRequest_shouldReturnSongEntity() {
+    void toEntity_withValidCreateRequest_shouldReturnSongEntity()
+    {
         // Arrange
         CreateSongRequest request = CreateSongRequest.builder().title("New Song").albumId(1L).trackNumber(2)
                 .durationSeconds(240).build();
@@ -53,7 +56,8 @@ class SongMapperTest {
     }
 
     @Test
-    void toResponseList_withValidSongList_shouldReturnResponseList() {
+    void toResponseList_withValidSongList_shouldReturnResponseList()
+    {
         // Arrange
         Album album = Album.builder().id(1L).build();
         List<Song> songs = Arrays.asList(Song.builder().id(1L).title("Song 1").album(album).trackNumber(1).build(),

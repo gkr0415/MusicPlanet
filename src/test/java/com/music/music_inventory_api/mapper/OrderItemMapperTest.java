@@ -13,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrderItemMapperTest {
+class OrderItemMapperTest
+{
 
     @Autowired
     private OrderItemMapper orderItemMapper;
 
     @Test
-    void toResponse_withValidOrderItem_shouldReturnOrderItemResponse() {
+    void toResponse_withValidOrderItem_shouldReturnOrderItemResponse()
+    {
         // Arrange
         Album album = Album.builder().id(1L).title("Test Album").build();
         OrderItem orderItem = OrderItem.builder().id(1L).album(album).quantity(2).unitPrice(new BigDecimal("19.99"))
@@ -39,7 +41,8 @@ class OrderItemMapperTest {
     }
 
     @Test
-    void toResponseList_withValidOrderItemList_shouldReturnResponseList() {
+    void toResponseList_withValidOrderItemList_shouldReturnResponseList()
+    {
         // Arrange
         Album album = Album.builder().id(1L).title("Album").build();
         List<OrderItem> orderItems = Arrays.asList(

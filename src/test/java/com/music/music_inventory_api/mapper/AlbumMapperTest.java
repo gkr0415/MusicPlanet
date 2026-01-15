@@ -15,13 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AlbumMapperTest {
+class AlbumMapperTest
+{
 
     @Autowired
     private AlbumMapper albumMapper;
 
     @Test
-    void toResponse_withValidAlbum_shouldReturnAlbumResponse() {
+    void toResponse_withValidAlbum_shouldReturnAlbumResponse()
+    {
         // Arrange
         Artist artist = Artist.builder().id(1L).name("The Beatles").build();
         Album album = Album.builder().id(1L).title("Abbey Road").artist(artist).releaseDate(LocalDate.of(1969, 9, 26))
@@ -40,7 +42,8 @@ class AlbumMapperTest {
     }
 
     @Test
-    void toEntity_withValidCreateRequest_shouldReturnAlbumEntity() {
+    void toEntity_withValidCreateRequest_shouldReturnAlbumEntity()
+    {
         // Arrange
         CreateAlbumRequest request = CreateAlbumRequest.builder().title("Dark Side of the Moon").artistId(2L)
                 .releaseDate(LocalDate.of(1973, 3, 1)).price(new BigDecimal("24.99")).stockQuantity(50).build();
@@ -56,7 +59,8 @@ class AlbumMapperTest {
     }
 
     @Test
-    void toResponseList_withValidAlbumList_shouldReturnResponseList() {
+    void toResponseList_withValidAlbumList_shouldReturnResponseList()
+    {
         // Arrange
         Artist artist = Artist.builder().id(1L).name("Artist").build();
         List<Album> albums = Arrays.asList(

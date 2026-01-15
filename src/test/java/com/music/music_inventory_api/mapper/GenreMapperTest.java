@@ -14,13 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GenreMapperTest {
+class GenreMapperTest
+{
 
     @Autowired
     private GenreMapper genreMapper;
 
     @Test
-    void toResponse_withValidGenre_shouldReturnGenreResponse() {
+    void toResponse_withValidGenre_shouldReturnGenreResponse()
+    {
         // Arrange
         Genre genre = Genre.builder().id(1L).name("Rock").description("Rock music genre").build();
 
@@ -35,7 +37,8 @@ class GenreMapperTest {
     }
 
     @Test
-    void toEntity_withValidCreateRequest_shouldReturnGenreEntity() {
+    void toEntity_withValidCreateRequest_shouldReturnGenreEntity()
+    {
         // Arrange
         CreateGenreRequest request = CreateGenreRequest.builder().name("Jazz").description("Jazz music genre").build();
 
@@ -49,7 +52,8 @@ class GenreMapperTest {
     }
 
     @Test
-    void toResponseSet_withValidGenreSet_shouldReturnResponseSet() {
+    void toResponseSet_withValidGenreSet_shouldReturnResponseSet()
+    {
         // Arrange
         Set<Genre> genres = new HashSet<>(
                 Arrays.asList(Genre.builder().id(1L).name("Rock").build(), Genre.builder().id(2L).name("Pop").build()));
@@ -63,7 +67,8 @@ class GenreMapperTest {
     }
 
     @Test
-    void toResponseList_withValidGenreList_shouldReturnResponseList() {
+    void toResponseList_withValidGenreList_shouldReturnResponseList()
+    {
         // Arrange
         List<Genre> genres = Arrays.asList(Genre.builder().id(1L).name("Classical").build(),
                 Genre.builder().id(2L).name("Electronic").build());

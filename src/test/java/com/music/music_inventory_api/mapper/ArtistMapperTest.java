@@ -14,13 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ArtistMapperTest {
+class ArtistMapperTest
+{
 
     @Autowired
     private ArtistMapper artistMapper;
 
     @Test
-    void toResponse_withValidArtist_shouldReturnArtistResponse() {
+    void toResponse_withValidArtist_shouldReturnArtistResponse()
+    {
         // Arrange
         Artist artist = Artist.builder().id(1L).name("The Beatles").country("UK").biography("Legendary rock band")
                 .createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
@@ -37,7 +39,8 @@ class ArtistMapperTest {
     }
 
     @Test
-    void toEntity_withValidCreateRequest_shouldReturnArtistEntity() {
+    void toEntity_withValidCreateRequest_shouldReturnArtistEntity()
+    {
         // Arrange
         CreateArtistRequest request = CreateArtistRequest.builder().name("Pink Floyd").country("UK")
                 .biography("Progressive rock pioneers").build();
@@ -53,7 +56,8 @@ class ArtistMapperTest {
     }
 
     @Test
-    void updateEntityFromRequest_withValidRequest_shouldUpdateArtistEntity() {
+    void updateEntityFromRequest_withValidRequest_shouldUpdateArtistEntity()
+    {
         // Arrange
         Artist artist = Artist.builder().id(1L).name("Old Name").country("Old Country").biography("Old Bio").build();
         UpdateArtistRequest request = UpdateArtistRequest.builder().name("New Name").country("New Country")
@@ -70,7 +74,8 @@ class ArtistMapperTest {
     }
 
     @Test
-    void toResponseList_withValidArtistList_shouldReturnResponseList() {
+    void toResponseList_withValidArtistList_shouldReturnResponseList()
+    {
         // Arrange
         List<Artist> artists = Arrays.asList(Artist.builder().id(1L).name("Artist 1").country("US").build(),
                 Artist.builder().id(2L).name("Artist 2").country("UK").build());

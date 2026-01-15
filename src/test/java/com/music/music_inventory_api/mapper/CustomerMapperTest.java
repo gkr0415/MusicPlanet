@@ -12,13 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CustomerMapperTest {
+class CustomerMapperTest
+{
 
     @Autowired
     private CustomerMapper customerMapper;
 
     @Test
-    void toResponse_withValidCustomer_shouldReturnCustomerResponse() {
+    void toResponse_withValidCustomer_shouldReturnCustomerResponse()
+    {
         // Arrange
         Customer customer = Customer.builder().id(1L).email("test@example.com").firstName("John").lastName("Doe")
                 .phone("1234567890").city("New York").country("USA").build();
@@ -36,7 +38,8 @@ class CustomerMapperTest {
     }
 
     @Test
-    void toEntity_withValidCreateRequest_shouldReturnCustomerEntity() {
+    void toEntity_withValidCreateRequest_shouldReturnCustomerEntity()
+    {
         // Arrange
         CreateCustomerRequest request = CreateCustomerRequest.builder().email("jane@example.com").firstName("Jane")
                 .lastName("Smith").phone("0987654321").address("123 Main St").city("Los Angeles").country("USA")
@@ -54,7 +57,8 @@ class CustomerMapperTest {
     }
 
     @Test
-    void toResponseList_withValidCustomerList_shouldReturnResponseList() {
+    void toResponseList_withValidCustomerList_shouldReturnResponseList()
+    {
         // Arrange
         List<Customer> customers = Arrays.asList(
                 Customer.builder().id(1L).email("user1@test.com").firstName("User").lastName("One").build(),
