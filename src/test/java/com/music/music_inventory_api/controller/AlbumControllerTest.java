@@ -1,5 +1,13 @@
 package com.music.music_inventory_api.controller;
 
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.music.music_inventory_api.dto.request.CreateAlbumRequest;
 import com.music.music_inventory_api.dto.request.UpdateAlbumRequest;
@@ -7,6 +15,10 @@ import com.music.music_inventory_api.dto.response.AlbumDetailResponse;
 import com.music.music_inventory_api.dto.response.AlbumResponse;
 import com.music.music_inventory_api.exception.EntityNotFoundException;
 import com.music.music_inventory_api.service.AlbumService;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +31,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-
-import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
 /**
  * Unit tests for AlbumController.
  */
 @WebMvcTest(AlbumController.class)
 @ActiveProfiles("test")
 @SuppressWarnings("null")
-class AlbumControllerTest {
+class AlbumControllerTest
+{
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +55,8 @@ class AlbumControllerTest {
     private AlbumDetailResponse albumDetailResponse;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         // Arrange - Set up test data
         createRequest = new CreateAlbumRequest();
         createRequest.setTitle("Abbey Road");
@@ -68,19 +69,10 @@ class AlbumControllerTest {
         updateRequest.setTitle("Abbey Road - Remastered");
         updateRequest.setPrice(new BigDecimal("24.99"));
 
-        albumResponse = AlbumResponse.builder()
-                .id(1L)
-                .title("Abbey Road")
-                .artistId(1L)
-                .artistName("The Beatles")
-                .price(new BigDecimal("19.99"))
-                .stockQuantity(50)
-                .build();
+        albumResponse = AlbumResponse.builder().id(1L).title("Abbey Road").artistId(1L).artistName("The Beatles")
+                .price(new BigDecimal("19.99")).stockQuantity(50).build();
 
-        albumDetailResponse = AlbumDetailResponse.builder()
-                .id(1L)
-                .title("Abbey Road")
-                .songs(Collections.emptyList())
+        albumDetailResponse = AlbumDetailResponse.builder().id(1L).title("Abbey Road").songs(Collections.emptyList())
                 .build();
     }
 
@@ -102,15 +94,14 @@ class AlbumControllerTest {
     }
 
     @Test
-    void createAlbum_withInvalidRequest_shouldReturnBadRequest() throws Exception {
+    void createAlbum_withInvalidRequest_shouldReturnBadRequest() throws Exception
+    {
         // Arrange - Request with missing required fields
         CreateAlbumRequest invalidRequest = new CreateAlbumRequest();
 
         // Act & Assert
-        mockMvc.perform(post("/api/albums")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(invalidRequest)))
-                .andExpect(status().isBadRequest());
+        mockMvc.perform(post("/api/albums").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidRequest))).andExpect(status().isBadRequest());
 
         verify(albumService, never()).createAlbum(any(CreateAlbumRequest.class));
     }
@@ -143,16 +134,15 @@ class AlbumControllerTest {
     }
 
     @Test
-    void getAllAlbums_withDefaultPagination_shouldReturnPageOfAlbums() throws Exception {
+    void getAllAlbums_withDefaultPagination_shouldReturnPageOfAlbums() throws Exception
+    {
         // Arrange
         List<AlbumResponse> albums = Collections.singletonList(albumResponse);
         Page<AlbumResponse> page = new PageImpl<>(albums, PageRequest.of(0, 20), 1);
         when(albumService.getAllAlbums(any())).thenReturn(page);
 
         // Act & Assert
-        mockMvc.perform(get("/api/albums"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(1)))
+        mockMvc.perform(get("/api/albums")).andExpect(status().isOk()).andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].title").value("Abbey Road"))
                 .andExpect(jsonPath("$.totalElements").value(1));
 
@@ -160,34 +150,30 @@ class AlbumControllerTest {
     }
 
     @Test
-    void getAllAlbums_withCustomPagination_shouldReturnPageOfAlbums() throws Exception {
+    void getAllAlbums_withCustomPagination_shouldReturnPageOfAlbums() throws Exception
+    {
         // Arrange
         List<AlbumResponse> albums = Collections.singletonList(albumResponse);
         Page<AlbumResponse> page = new PageImpl<>(albums, PageRequest.of(0, 10), 1);
         when(albumService.getAllAlbums(any())).thenReturn(page);
 
         // Act & Assert
-        mockMvc.perform(get("/api/albums")
-                        .param("page", "0")
-                        .param("size", "10"))
-                .andExpect(status().isOk())
+        mockMvc.perform(get("/api/albums").param("page", "0").param("size", "10")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.size").value(10));
 
         verify(albumService).getAllAlbums(any());
     }
 
     @Test
-    void searchAlbums_withValidQuery_shouldReturnMatchingAlbums() throws Exception {
+    void searchAlbums_withValidQuery_shouldReturnMatchingAlbums() throws Exception
+    {
         // Arrange
         List<AlbumResponse> albums = Collections.singletonList(albumResponse);
         when(albumService.searchAlbums("Beatles")).thenReturn(albums);
 
         // Act & Assert
-        mockMvc.perform(get("/api/albums/search")
-                        .param("q", "Beatles"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].title").value("Abbey Road"));
+        mockMvc.perform(get("/api/albums/search").param("q", "Beatles")).andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1))).andExpect(jsonPath("$[0].title").value("Abbey Road"));
 
         verify(albumService).searchAlbums("Beatles");
     }
@@ -205,15 +191,14 @@ class AlbumControllerTest {
     }
 
     @Test
-    void getAlbumsByGenre_withValidGenreId_shouldReturnAlbums() throws Exception {
+    void getAlbumsByGenre_withValidGenreId_shouldReturnAlbums() throws Exception
+    {
         // Arrange
         List<AlbumResponse> albums = Collections.singletonList(albumResponse);
         when(albumService.getAlbumsByGenre(1L)).thenReturn(albums);
 
         // Act & Assert
-        mockMvc.perform(get("/api/albums/genre/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
+        mockMvc.perform(get("/api/albums/genre/1")).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title").value("Abbey Road"));
 
         verify(albumService).getAlbumsByGenre(1L);
@@ -233,18 +218,15 @@ class AlbumControllerTest {
     }
 
     @Test
-    void getAlbumsByPriceRange_withValidRange_shouldReturnAlbums() throws Exception {
+    void getAlbumsByPriceRange_withValidRange_shouldReturnAlbums() throws Exception
+    {
         // Arrange
         List<AlbumResponse> albums = Collections.singletonList(albumResponse);
-        when(albumService.getAlbumsByPriceRange(any(BigDecimal.class), any(BigDecimal.class)))
-                .thenReturn(albums);
+        when(albumService.getAlbumsByPriceRange(any(BigDecimal.class), any(BigDecimal.class))).thenReturn(albums);
 
         // Act & Assert
-        mockMvc.perform(get("/api/albums/price-range")
-                        .param("min", "10.00")
-                        .param("max", "30.00"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)))
+        mockMvc.perform(get("/api/albums/price-range").param("min", "10.00").param("max", "30.00"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title").value("Abbey Road"));
 
         verify(albumService).getAlbumsByPriceRange(any(BigDecimal.class), any(BigDecimal.class));
@@ -266,23 +248,17 @@ class AlbumControllerTest {
     }
 
     @Test
-    void updateAlbum_withValidRequest_shouldReturnUpdatedAlbum() throws Exception {
+    void updateAlbum_withValidRequest_shouldReturnUpdatedAlbum() throws Exception
+    {
         // Arrange
-        AlbumResponse updatedResponse = AlbumResponse.builder()
-                .id(1L)
-                .title("Abbey Road - Remastered")
-                .price(new BigDecimal("24.99"))
-                .build();
-        when(albumService.updateAlbum(eq(1L), any(UpdateAlbumRequest.class)))
-                .thenReturn(updatedResponse);
+        AlbumResponse updatedResponse = AlbumResponse.builder().id(1L).title("Abbey Road - Remastered")
+                .price(new BigDecimal("24.99")).build();
+        when(albumService.updateAlbum(eq(1L), any(UpdateAlbumRequest.class))).thenReturn(updatedResponse);
 
         // Act & Assert
-        mockMvc.perform(put("/api/albums/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updateRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.title").value("Abbey Road - Remastered"));
+        mockMvc.perform(put("/api/albums/1").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(updateRequest))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1)).andExpect(jsonPath("$.title").value("Abbey Road - Remastered"));
 
         verify(albumService).updateAlbum(eq(1L), any(UpdateAlbumRequest.class));
     }
@@ -303,26 +279,25 @@ class AlbumControllerTest {
     }
 
     @Test
-    void deleteAlbum_withExistingId_shouldReturnNoContent() throws Exception {
+    void deleteAlbum_withExistingId_shouldReturnNoContent() throws Exception
+    {
         // Arrange
         doNothing().when(albumService).deleteAlbum(1L);
 
         // Act & Assert
-        mockMvc.perform(delete("/api/albums/1"))
-                .andExpect(status().isNoContent());
+        mockMvc.perform(delete("/api/albums/1")).andExpect(status().isNoContent());
 
         verify(albumService).deleteAlbum(1L);
     }
 
     @Test
-    void deleteAlbum_withNonExistentId_shouldReturnNotFound() throws Exception {
+    void deleteAlbum_withNonExistentId_shouldReturnNotFound() throws Exception
+    {
         // Arrange
-        doThrow(new EntityNotFoundException("Album not found with ID: 999"))
-                .when(albumService).deleteAlbum(999L);
+        doThrow(new EntityNotFoundException("Album not found with ID: 999")).when(albumService).deleteAlbum(999L);
 
         // Act & Assert
-        mockMvc.perform(delete("/api/albums/999"))
-                .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/api/albums/999")).andExpect(status().isNotFound());
 
         verify(albumService).deleteAlbum(999L);
     }

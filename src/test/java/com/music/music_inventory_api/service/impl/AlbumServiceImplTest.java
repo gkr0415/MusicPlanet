@@ -1,5 +1,10 @@
 package com.music.music_inventory_api.service.impl;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+
 import com.music.music_inventory_api.dto.request.CreateAlbumRequest;
 import com.music.music_inventory_api.dto.request.UpdateAlbumRequest;
 import com.music.music_inventory_api.dto.response.AlbumDetailResponse;
@@ -16,6 +21,8 @@ import com.music.music_inventory_api.repository.AlbumRepository;
 import com.music.music_inventory_api.repository.ArtistRepository;
 import com.music.music_inventory_api.repository.GenreRepository;
 import com.music.music_inventory_api.repository.SongRepository;
+import java.math.BigDecimal;
+import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,20 +34,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.math.BigDecimal;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-
 /**
  * Unit tests for AlbumServiceImpl.
  */
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("null")
-class AlbumServiceImplTest {
+class AlbumServiceImplTest
+{
 
     @Mock
     private AlbumRepository albumRepository;
@@ -72,7 +72,8 @@ class AlbumServiceImplTest {
     private AlbumDetailResponse albumDetailResponse;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         // Arrange - Set up test data
         testArtist = new Artist();
         testArtist.setId(1L);
@@ -101,17 +102,10 @@ class AlbumServiceImplTest {
         updateRequest.setTitle("Abbey Road - Remastered");
         updateRequest.setPrice(new BigDecimal("24.99"));
 
-        albumResponse = AlbumResponse.builder()
-                .id(1L)
-                .title("Abbey Road")
-                .artistId(1L)
-                .artistName("The Beatles")
+        albumResponse = AlbumResponse.builder().id(1L).title("Abbey Road").artistId(1L).artistName("The Beatles")
                 .build();
 
-        albumDetailResponse = AlbumDetailResponse.builder()
-                .id(1L)
-                .title("Abbey Road")
-                .build();
+        albumDetailResponse = AlbumDetailResponse.builder().id(1L).title("Abbey Road").build();
     }
 
     @Test
@@ -165,16 +159,16 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void getAlbumById_withExistingId_shouldReturnAlbumDetail() {
+    void getAlbumById_withExistingId_shouldReturnAlbumDetail()
+    {
         // Arrange
         Song testSong = new Song();
         testSong.setId(1L);
         testSong.setTitle("Come Together");
-        
+
         List<Song> songs = Collections.singletonList(testSong);
-        List<SongResponse> songResponses = Collections.singletonList(
-                SongResponse.builder().id(1L).title("Come Together").build()
-        );
+        List<SongResponse> songResponses = Collections
+                .singletonList(SongResponse.builder().id(1L).title("Come Together").build());
 
         when(albumRepository.findById(1L)).thenReturn(Optional.of(testAlbum));
         when(songRepository.findByAlbumId(1L)).thenReturn(songs);
@@ -204,7 +198,8 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void getAllAlbums_withPageable_shouldReturnPageOfAlbums() {
+    void getAllAlbums_withPageable_shouldReturnPageOfAlbums()
+    {
         // Arrange
         List<Album> albums = Collections.singletonList(testAlbum);
         Page<Album> albumPage = new PageImpl<>(albums);
@@ -223,7 +218,8 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void searchAlbums_withValidSearchTerm_shouldReturnMatchingAlbums() {
+    void searchAlbums_withValidSearchTerm_shouldReturnMatchingAlbums()
+    {
         // Arrange
         List<Album> albums = Collections.singletonList(testAlbum);
         when(albumRepository.searchByTitleOrArtistName("Beatles")).thenReturn(albums);
@@ -239,27 +235,26 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void searchAlbums_withEmptySearchTerm_shouldThrowIllegalArgumentException() {
+    void searchAlbums_withEmptySearchTerm_shouldThrowIllegalArgumentException()
+    {
         // Arrange
         String emptySearchTerm = "";
 
         // Act & Assert
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> albumService.searchAlbums(emptySearchTerm)
-        );
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> albumService.searchAlbums(emptySearchTerm));
         assertTrue(exception.getMessage().contains("Search term cannot be empty"));
         verify(albumRepository, never()).searchByTitleOrArtistName(anyString());
     }
 
     @Test
-    void getAlbumsByGenre_withValidGenreId_shouldReturnAlbums() {
+    void getAlbumsByGenre_withValidGenreId_shouldReturnAlbums()
+    {
         // Arrange
         List<Album> albums = Collections.singletonList(testAlbum);
         when(genreRepository.findById(1L)).thenReturn(Optional.of(testGenre));
-        when(albumRepository.searchByGenreAndPriceRange(
-                eq("Rock"), any(BigDecimal.class), any(BigDecimal.class)
-        )).thenReturn(albums);
+        when(albumRepository.searchByGenreAndPriceRange(eq("Rock"), any(BigDecimal.class), any(BigDecimal.class)))
+                .thenReturn(albums);
         when(albumMapper.toResponseList(albums)).thenReturn(Collections.singletonList(albumResponse));
 
         // Act
@@ -285,12 +280,13 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void getAlbumsByPriceRange_withValidRange_shouldReturnAlbums() {
+    void getAlbumsByPriceRange_withValidRange_shouldReturnAlbums()
+    {
         // Arrange
         BigDecimal minPrice = new BigDecimal("10.00");
         BigDecimal maxPrice = new BigDecimal("30.00");
         List<Album> albums = Collections.singletonList(testAlbum);
-        
+
         when(albumRepository.findAll()).thenReturn(albums);
         when(albumMapper.toResponseList(anyList())).thenReturn(Collections.singletonList(albumResponse));
 
@@ -303,30 +299,28 @@ class AlbumServiceImplTest {
     }
 
     @Test
-    void getAlbumsByPriceRange_withNullPrices_shouldThrowIllegalArgumentException() {
+    void getAlbumsByPriceRange_withNullPrices_shouldThrowIllegalArgumentException()
+    {
         // Arrange
         BigDecimal minPrice = null;
         BigDecimal maxPrice = new BigDecimal("30.00");
 
         // Act & Assert
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> albumService.getAlbumsByPriceRange(minPrice, maxPrice)
-        );
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> albumService.getAlbumsByPriceRange(minPrice, maxPrice));
         assertTrue(exception.getMessage().contains("Price range cannot be null"));
     }
 
     @Test
-    void getAlbumsByPriceRange_withInvertedRange_shouldThrowIllegalArgumentException() {
+    void getAlbumsByPriceRange_withInvertedRange_shouldThrowIllegalArgumentException()
+    {
         // Arrange
         BigDecimal minPrice = new BigDecimal("50.00");
         BigDecimal maxPrice = new BigDecimal("10.00");
 
         // Act & Assert
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> albumService.getAlbumsByPriceRange(minPrice, maxPrice)
-        );
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> albumService.getAlbumsByPriceRange(minPrice, maxPrice));
         assertTrue(exception.getMessage().contains("Minimum price cannot be greater than maximum price"));
     }
 

@@ -4,21 +4,22 @@ import com.music.music_inventory_api.dto.request.CreateAlbumRequest;
 import com.music.music_inventory_api.dto.request.UpdateAlbumRequest;
 import com.music.music_inventory_api.dto.response.AlbumDetailResponse;
 import com.music.music_inventory_api.dto.response.AlbumResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import java.math.BigDecimal;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Service interface for Album business logic.
  */
-public interface AlbumService {
+public interface AlbumService
+{
 
     /**
      * Create a new album.
      *
-     * @param request the album creation request
+     * @param request
+     *            the album creation request
      * @return the created album response
      */
     AlbumResponse createAlbum(CreateAlbumRequest request);
@@ -26,7 +27,8 @@ public interface AlbumService {
     /**
      * Get album by ID with detailed information including songs.
      *
-     * @param id the album ID
+     * @param id
+     *            the album ID
      * @return the detailed album response
      */
     AlbumDetailResponse getAlbumById(Long id);
@@ -34,7 +36,8 @@ public interface AlbumService {
     /**
      * Get all albums with pagination.
      *
-     * @param pageable pagination information
+     * @param pageable
+     *            pagination information
      * @return page of album responses
      */
     Page<AlbumResponse> getAllAlbums(Pageable pageable);
@@ -42,7 +45,8 @@ public interface AlbumService {
     /**
      * Search albums by title or artist name.
      *
-     * @param searchTerm the search term
+     * @param searchTerm
+     *            the search term
      * @return list of matching albums
      */
     List<AlbumResponse> searchAlbums(String searchTerm);
@@ -50,7 +54,8 @@ public interface AlbumService {
     /**
      * Get albums by genre.
      *
-     * @param genreId the genre ID
+     * @param genreId
+     *            the genre ID
      * @return list of albums in the genre
      */
     List<AlbumResponse> getAlbumsByGenre(Long genreId);
@@ -58,8 +63,10 @@ public interface AlbumService {
     /**
      * Get albums by price range.
      *
-     * @param minPrice minimum price
-     * @param maxPrice maximum price
+     * @param minPrice
+     *            minimum price
+     * @param maxPrice
+     *            maximum price
      * @return list of albums in the price range
      */
     List<AlbumResponse> getAlbumsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice);
@@ -67,8 +74,10 @@ public interface AlbumService {
     /**
      * Update an existing album.
      *
-     * @param id      the album ID
-     * @param request the update request
+     * @param id
+     *            the album ID
+     * @param request
+     *            the update request
      * @return the updated album response
      */
     AlbumResponse updateAlbum(Long id, UpdateAlbumRequest request);
@@ -76,7 +85,8 @@ public interface AlbumService {
     /**
      * Delete an album.
      *
-     * @param id the album ID
+     * @param id
+     *            the album ID
      */
     void deleteAlbum(Long id);
 }

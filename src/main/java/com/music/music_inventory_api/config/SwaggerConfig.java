@@ -11,9 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger/OpenAPI configuration for API documentation.
- * Access Swagger UI at: http://localhost:8081/swagger-ui.html
- * Access API docs at: http://localhost:8081/api-docs
+ * Swagger/OpenAPI configuration for API documentation. Access Swagger UI at:
+ * http://localhost:8081/swagger-ui.html Access API docs at:
+ * http://localhost:8081/api-docs
  */
 @Configuration
 public class SwaggerConfig
