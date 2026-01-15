@@ -1,38 +1,31 @@
 package com.music.music_inventory_api.mapper;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.music.music_inventory_api.dto.response.OrderItemResponse;
 import com.music.music_inventory_api.entity.Album;
 import com.music.music_inventory_api.entity.OrderItem;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class OrderItemMapperTest {
+class OrderItemMapperTest
+{
 
     @Autowired
     private OrderItemMapper orderItemMapper;
 
     @Test
-    void shouldMapOrderItemToResponse() {
-        Album album = Album.builder()
-                .id(1L)
-                .title("Test Album")
-                .build();
+    void shouldMapOrderItemToResponse()
+    {
+        Album album = Album.builder().id(1L).title("Test Album").build();
 
-        OrderItem orderItem = OrderItem.builder()
-                .id(1L)
-                .album(album)
-                .quantity(2)
-                .unitPrice(new BigDecimal("19.99"))
-                .subtotal(new BigDecimal("39.98"))
-                .build();
+        OrderItem orderItem = OrderItem.builder().id(1L).album(album).quantity(2).unitPrice(new BigDecimal("19.99"))
+                .subtotal(new BigDecimal("39.98")).build();
 
         OrderItemResponse response = orderItemMapper.toResponse(orderItem);
 
@@ -46,13 +39,13 @@ class OrderItemMapperTest {
     }
 
     @Test
-    void shouldMapOrderItemListToResponseList() {
+    void shouldMapOrderItemListToResponseList()
+    {
         Album album = Album.builder().id(1L).title("Album").build();
-        
+
         List<OrderItem> orderItems = Arrays.asList(
                 OrderItem.builder().id(1L).album(album).quantity(1).unitPrice(new BigDecimal("10.00")).build(),
-                OrderItem.builder().id(2L).album(album).quantity(2).unitPrice(new BigDecimal("15.00")).build()
-        );
+                OrderItem.builder().id(2L).album(album).quantity(2).unitPrice(new BigDecimal("15.00")).build());
 
         List<OrderItemResponse> responses = orderItemMapper.toResponseList(orderItems);
 

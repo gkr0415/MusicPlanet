@@ -3,13 +3,13 @@ package com.music.music_inventory_api.mapper;
 import com.music.music_inventory_api.dto.request.CreateOrderItemRequest;
 import com.music.music_inventory_api.dto.response.OrderItemResponse;
 import com.music.music_inventory_api.entity.OrderItem;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
-public interface OrderItemMapper {
+public interface OrderItemMapper
+{
 
     @Mapping(source = "album.id", target = "albumId")
     @Mapping(source = "album.title", target = "albumTitle")

@@ -1,22 +1,20 @@
 package com.music.music_inventory_api.dto.request;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-/**
- * DTO for creating a new customer.
- */
+/** DTO for creating a new customer. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateCustomerRequest {
+public class CreateCustomerRequest
+{
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email must be valid")

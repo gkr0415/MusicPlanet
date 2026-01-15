@@ -1,20 +1,18 @@
 package com.music.music_inventory_api.dto.response;
 
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-/**
- * DTO for order item response.
- */
+/** DTO for order item response. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItemResponse {
+public class OrderItemResponse
+{
 
     private Long id;
     private Long albumId;

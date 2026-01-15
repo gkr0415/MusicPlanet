@@ -1,22 +1,21 @@
 package com.music.music_inventory_api.entity;
 
-import com.music.music_inventory_api.enums.OrderStatus;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
+import com.music.music_inventory_api.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for entity creation and relationships using Arrange-Act-Assert pattern.
  */
-class EntityTest 
+class EntityTest
 {
 
     @Test
-    void artistCreation_withValidData_shouldCreateArtistSuccessfully() 
+    void artistCreation_withValidData_shouldCreateArtistSuccessfully()
     {
         // Arrange
         String name = "The Beatles";
@@ -24,11 +23,7 @@ class EntityTest
         String biography = "Legendary rock band";
 
         // Act
-        Artist artist = Artist.builder()
-                .name(name)
-                .country(country)
-                .biography(biography)
-                .build();
+        Artist artist = Artist.builder().name(name).country(country).biography(biography).build();
 
         // Assert
         assertEquals(name, artist.getName());
@@ -38,17 +33,14 @@ class EntityTest
     }
 
     @Test
-    void genreCreation_withValidData_shouldCreateGenreSuccessfully() 
+    void genreCreation_withValidData_shouldCreateGenreSuccessfully()
     {
         // Arrange
         String name = "Rock";
         String description = "Rock music genre";
 
         // Act
-        Genre genre = Genre.builder()
-                .name(name)
-                .description(description)
-                .build();
+        Genre genre = Genre.builder().name(name).description(description).build();
 
         // Assert
         assertEquals(name, genre.getName());
@@ -57,26 +49,18 @@ class EntityTest
     }
 
     @Test
-    void albumCreation_withArtistAndValidData_shouldCreateAlbumSuccessfully() 
+    void albumCreation_withArtistAndValidData_shouldCreateAlbumSuccessfully()
     {
         // Arrange
-        Artist artist = Artist.builder()
-                .id(1L)
-                .name("The Beatles")
-                .build();
+        Artist artist = Artist.builder().id(1L).name("The Beatles").build();
         String title = "Abbey Road";
         LocalDate releaseDate = LocalDate.of(1969, 9, 26);
         BigDecimal price = new BigDecimal("19.99");
         Integer stockQuantity = 100;
 
         // Act
-        Album album = Album.builder()
-                .title(title)
-                .artist(artist)
-                .releaseDate(releaseDate)
-                .price(price)
-                .stockQuantity(stockQuantity)
-                .build();
+        Album album = Album.builder().title(title).artist(artist).releaseDate(releaseDate).price(price)
+                .stockQuantity(stockQuantity).build();
 
         // Assert
         assertEquals(title, album.getTitle());
@@ -88,14 +72,10 @@ class EntityTest
     }
 
     @Test
-    void albumGenreRelationship_whenAddingAndRemovingGenres_shouldManageGenresCorrectly() 
+    void albumGenreRelationship_whenAddingAndRemovingGenres_shouldManageGenresCorrectly()
     {
         // Arrange
-        Album album = Album.builder()
-                .title("Abbey Road")
-                .price(new BigDecimal("19.99"))
-                .stockQuantity(100)
-                .build();
+        Album album = Album.builder().title("Abbey Road").price(new BigDecimal("19.99")).stockQuantity(100).build();
         Genre rock = Genre.builder().id(1L).name("Rock").build();
         Genre pop = Genre.builder().id(2L).name("Pop").build();
 
@@ -118,23 +98,16 @@ class EntityTest
     }
 
     @Test
-    void songCreation_withAlbumAndValidData_shouldCreateSongSuccessfully() 
+    void songCreation_withAlbumAndValidData_shouldCreateSongSuccessfully()
     {
         // Arrange
-        Album album = Album.builder()
-                .id(1L)
-                .title("Abbey Road")
-                .build();
+        Album album = Album.builder().id(1L).title("Abbey Road").build();
         String title = "Come Together";
         Integer trackNumber = 1;
         Integer durationSeconds = 259;
 
         // Act
-        Song song = Song.builder()
-                .title(title)
-                .album(album)
-                .trackNumber(trackNumber)
-                .durationSeconds(durationSeconds)
+        Song song = Song.builder().title(title).album(album).trackNumber(trackNumber).durationSeconds(durationSeconds)
                 .build();
 
         // Assert
@@ -146,7 +119,7 @@ class EntityTest
     }
 
     @Test
-    void customerCreation_withValidData_shouldCreateCustomerSuccessfully() 
+    void customerCreation_withValidData_shouldCreateCustomerSuccessfully()
     {
         // Arrange
         String firstName = "John";
@@ -159,16 +132,8 @@ class EntityTest
         String postalCode = "10001";
 
         // Act
-        Customer customer = Customer.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .phone(phone)
-                .address(address)
-                .city(city)
-                .country(country)
-                .postalCode(postalCode)
-                .build();
+        Customer customer = Customer.builder().firstName(firstName).lastName(lastName).email(email).phone(phone)
+                .address(address).city(city).country(country).postalCode(postalCode).build();
 
         // Assert
         assertEquals(firstName, customer.getFirstName());
@@ -183,14 +148,10 @@ class EntityTest
     }
 
     @Test
-    void orderCreation_withCustomerAndValidData_shouldCreateOrderSuccessfully() 
+    void orderCreation_withCustomerAndValidData_shouldCreateOrderSuccessfully()
     {
         // Arrange
-        Customer customer = Customer.builder()
-                .id(1L)
-                .firstName("John")
-                .lastName("Doe")
-                .email("john.doe@example.com")
+        Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").email("john.doe@example.com")
                 .build();
         OrderStatus status = OrderStatus.PENDING;
         BigDecimal totalAmount = new BigDecimal("39.98");
@@ -201,16 +162,9 @@ class EntityTest
         String shippingPostalCode = "10001";
 
         // Act
-        Order order = Order.builder()
-                .customer(customer)
-                .status(status)
-                .totalAmount(totalAmount)
-                .orderDate(orderDate)
-                .shippingAddress(shippingAddress)
-                .shippingCity(shippingCity)
-                .shippingCountry(shippingCountry)
-                .shippingPostalCode(shippingPostalCode)
-                .build();
+        Order order = Order.builder().customer(customer).status(status).totalAmount(totalAmount).orderDate(orderDate)
+                .shippingAddress(shippingAddress).shippingCity(shippingCity).shippingCountry(shippingCountry)
+                .shippingPostalCode(shippingPostalCode).build();
 
         // Assert
         assertEquals(customer, order.getCustomer());
@@ -225,7 +179,7 @@ class EntityTest
     }
 
     @Test
-    void orderItemCreation_withOrderAndAlbum_shouldCreateOrderItemSuccessfully() 
+    void orderItemCreation_withOrderAndAlbum_shouldCreateOrderItemSuccessfully()
     {
         // Arrange
         Order order = Order.builder().id(1L).build();
@@ -235,13 +189,8 @@ class EntityTest
         BigDecimal subtotal = new BigDecimal("39.98");
 
         // Act
-        OrderItem orderItem = OrderItem.builder()
-                .order(order)
-                .album(album)
-                .quantity(quantity)
-                .unitPrice(unitPrice)
-                .subtotal(subtotal)
-                .build();
+        OrderItem orderItem = OrderItem.builder().order(order).album(album).quantity(quantity).unitPrice(unitPrice)
+                .subtotal(subtotal).build();
 
         // Assert
         assertEquals(order, orderItem.getOrder());
@@ -253,22 +202,14 @@ class EntityTest
     }
 
     @Test
-    void orderOrderItemRelationship_whenAddingAndRemovingItems_shouldManageBidirectionalRelationship() 
+    void orderOrderItemRelationship_whenAddingAndRemovingItems_shouldManageBidirectionalRelationship()
     {
         // Arrange
-        Order order = Order.builder()
-                .customer(Customer.builder().id(1L).build())
-                .status(OrderStatus.PENDING)
-                .totalAmount(BigDecimal.ZERO)
-                .orderDate(LocalDateTime.now())
-                .build();
+        Order order = Order.builder().customer(Customer.builder().id(1L).build()).status(OrderStatus.PENDING)
+                .totalAmount(BigDecimal.ZERO).orderDate(LocalDateTime.now()).build();
         Album album = Album.builder().id(1L).title("Abbey Road").build();
-        OrderItem orderItem = OrderItem.builder()
-                .album(album)
-                .quantity(1)
-                .unitPrice(new BigDecimal("19.99"))
-                .subtotal(new BigDecimal("19.99"))
-                .build();
+        OrderItem orderItem = OrderItem.builder().album(album).quantity(1).unitPrice(new BigDecimal("19.99"))
+                .subtotal(new BigDecimal("19.99")).build();
 
         // Act - Add order item
         order.addOrderItem(orderItem);
@@ -287,7 +228,7 @@ class EntityTest
     }
 
     @Test
-    void entityEquals_whenEntitiesHaveSameId_shouldBeEqual() 
+    void entityEquals_whenEntitiesHaveSameId_shouldBeEqual()
     {
         // Arrange
         Artist artist1 = Artist.builder().id(1L).name("Artist 1").build();
@@ -299,7 +240,7 @@ class EntityTest
     }
 
     @Test
-    void entityEquals_whenEntitiesHaveDifferentIds_shouldNotBeEqual() 
+    void entityEquals_whenEntitiesHaveDifferentIds_shouldNotBeEqual()
     {
         // Arrange
         Artist artist1 = Artist.builder().id(1L).name("Artist 1").build();
@@ -310,7 +251,7 @@ class EntityTest
     }
 
     @Test
-    void orderStatusEnum_whenValueOfCalled_shouldReturnCorrectEnumValues() 
+    void orderStatusEnum_whenValueOfCalled_shouldReturnCorrectEnumValues()
     {
         // Act & Assert
         assertEquals(OrderStatus.PENDING, OrderStatus.valueOf("PENDING"));

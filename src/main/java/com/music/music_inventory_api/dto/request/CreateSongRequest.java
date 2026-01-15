@@ -1,23 +1,21 @@
 package com.music.music_inventory_api.dto.request;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-/**
- * DTO for creating a new song.
- */
+/** DTO for creating a new song. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateSongRequest {
+public class CreateSongRequest
+{
 
     @NotBlank(message = "Song title is required")
     @Size(min = 1, max = 255, message = "Song title must be between 1 and 255 characters")

@@ -1,35 +1,30 @@
 package com.music.music_inventory_api.mapper;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.music.music_inventory_api.dto.request.CreateArtistRequest;
 import com.music.music_inventory_api.dto.request.UpdateArtistRequest;
 import com.music.music_inventory_api.dto.response.ArtistResponse;
 import com.music.music_inventory_api.entity.Artist;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
-class ArtistMapperTest {
+class ArtistMapperTest
+{
 
     @Autowired
     private ArtistMapper artistMapper;
 
     @Test
-    void shouldMapArtistToResponse() {
-        Artist artist = Artist.builder()
-                .id(1L)
-                .name("The Beatles")
-                .country("UK")
-                .biography("Legendary rock band")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+    void shouldMapArtistToResponse()
+    {
+        Artist artist = Artist.builder().id(1L).name("The Beatles").country("UK").biography("Legendary rock band")
+                .createdAt(LocalDateTime.now()).updatedAt(LocalDateTime.now()).build();
 
         ArtistResponse response = artistMapper.toResponse(artist);
 
@@ -41,12 +36,10 @@ class ArtistMapperTest {
     }
 
     @Test
-    void shouldMapCreateRequestToEntity() {
-        CreateArtistRequest request = CreateArtistRequest.builder()
-                .name("Pink Floyd")
-                .country("UK")
-                .biography("Progressive rock pioneers")
-                .build();
+    void shouldMapCreateRequestToEntity()
+    {
+        CreateArtistRequest request = CreateArtistRequest.builder().name("Pink Floyd").country("UK")
+                .biography("Progressive rock pioneers").build();
 
         Artist artist = artistMapper.toEntity(request);
 
@@ -57,19 +50,12 @@ class ArtistMapperTest {
     }
 
     @Test
-    void shouldUpdateEntityFromRequest() {
-        Artist artist = Artist.builder()
-                .id(1L)
-                .name("Old Name")
-                .country("Old Country")
-                .biography("Old Bio")
-                .build();
+    void shouldUpdateEntityFromRequest()
+    {
+        Artist artist = Artist.builder().id(1L).name("Old Name").country("Old Country").biography("Old Bio").build();
 
-        UpdateArtistRequest request = UpdateArtistRequest.builder()
-                .name("New Name")
-                .country("New Country")
-                .biography("New Bio")
-                .build();
+        UpdateArtistRequest request = UpdateArtistRequest.builder().name("New Name").country("New Country")
+                .biography("New Bio").build();
 
         artistMapper.updateEntityFromRequest(request, artist);
 
@@ -80,11 +66,10 @@ class ArtistMapperTest {
     }
 
     @Test
-    void shouldMapArtistListToResponseList() {
-        List<Artist> artists = Arrays.asList(
-                Artist.builder().id(1L).name("Artist 1").country("US").build(),
-                Artist.builder().id(2L).name("Artist 2").country("UK").build()
-        );
+    void shouldMapArtistListToResponseList()
+    {
+        List<Artist> artists = Arrays.asList(Artist.builder().id(1L).name("Artist 1").country("US").build(),
+                Artist.builder().id(2L).name("Artist 2").country("UK").build());
 
         List<ArtistResponse> responses = artistMapper.toResponseList(artists);
 

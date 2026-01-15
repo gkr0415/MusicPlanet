@@ -1,27 +1,25 @@
 package com.music.music_inventory_api.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Set;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * DTO for creating a new album.
- */
+/** DTO for creating a new album. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateAlbumRequest {
+public class CreateAlbumRequest
+{
 
     @NotBlank(message = "Album title is required")
     @Size(min = 1, max = 255, message = "Album title must be between 1 and 255 characters")
