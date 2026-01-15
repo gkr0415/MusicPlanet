@@ -13,8 +13,8 @@ import java.util.List;
 
 /**
  * Swagger/OpenAPI configuration for API documentation.
- * Access Swagger UI at: http://localhost:8080/swagger-ui.html
- * Access API docs at: http://localhost:8080/api-docs
+ * Access Swagger UI at: http://localhost:8081/swagger-ui.html
+ * Access API docs at: http://localhost:8081/api-docs
  */
 @Configuration
 public class SwaggerConfig {
