@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateSongRequest {
+public class UpdateSongRequest
+{
 
     @Size(min = 1, max = 255, message = "Song title must be between 1 and 255 characters")
     private String title;

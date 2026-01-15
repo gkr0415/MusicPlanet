@@ -10,7 +10,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface SongMapper {
+public interface SongMapper
+{
 
     @Mapping(source = "album.id", target = "albumId")
     SongResponse toResponse(Song song);

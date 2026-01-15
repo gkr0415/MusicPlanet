@@ -29,7 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class GenreServiceImpl implements GenreService {
+public class GenreServiceImpl implements GenreService
+{
 
     private final GenreRepository genreRepository;
     private final AlbumRepository albumRepository;
@@ -38,7 +39,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public GenreResponse createGenre(CreateGenreRequest request) {
+    public GenreResponse createGenre(CreateGenreRequest request)
+    {
         log.info("Creating new genre with name: {}", request.getName());
 
         Genre genre = genreMapper.toEntity(request);
@@ -49,7 +51,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreResponse getGenreById(Long id) {
+    public GenreResponse getGenreById(Long id)
+    {
         log.info("Fetching genre with ID: {}", id);
 
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Genre", id));
@@ -58,7 +61,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public Page<GenreResponse> getAllGenres(Pageable pageable) {
+    public Page<GenreResponse> getAllGenres(Pageable pageable)
+    {
         log.info("Fetching all genres - Page: {}, Size: {}", pageable.getPageNumber(), pageable.getPageSize());
 
         Page<Genre> genresPage = genreRepository.findAll(pageable);
@@ -69,7 +73,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public GenreResponse updateGenre(Long id, UpdateGenreRequest request) {
+    public GenreResponse updateGenre(Long id, UpdateGenreRequest request)
+    {
         log.info("Updating genre with ID: {}", id);
 
         Genre genre = genreRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Genre", id));
@@ -85,10 +90,12 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public void deleteGenre(Long id) {
+    public void deleteGenre(Long id)
+    {
         log.info("Deleting genre with ID: {}", id);
 
-        if (!genreRepository.existsById(id)) {
+        if (!genreRepository.existsById(id))
+        {
             throw new EntityNotFoundException("Genre", id);
         }
 
@@ -97,7 +104,8 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<AlbumResponse> getAlbumsByGenre(Long genreId) {
+    public List<AlbumResponse> getAlbumsByGenre(Long genreId)
+    {
         log.info("Fetching albums for genre ID: {}", genreId);
 
         // Verify genre exists

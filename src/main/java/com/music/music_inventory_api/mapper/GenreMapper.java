@@ -11,7 +11,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
-public interface GenreMapper {
+public interface GenreMapper
+{
 
     GenreResponse toResponse(Genre genre);
 

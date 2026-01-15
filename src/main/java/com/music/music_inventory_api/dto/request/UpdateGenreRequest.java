@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateGenreRequest {
+public class UpdateGenreRequest
+{
 
     @Size(min = 1, max = 100, message = "Genre name must be between 1 and 100 characters")
     private String name;

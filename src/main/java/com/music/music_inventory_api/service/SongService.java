@@ -11,13 +11,14 @@ import org.springframework.data.domain.Pageable;
  * Service interface for Song entity operations. Defines business logic for
  * managing songs.
  */
-public interface SongService {
+public interface SongService
+{
 
     /**
      * Create a new song.
      *
      * @param request
-     *                the song creation request
+     *            the song creation request
      * @return the created song response
      */
     SongResponse createSong(CreateSongRequest request);
@@ -26,13 +27,10 @@ public interface SongService {
      * Get song by ID.
      *
      * @param id
-     *           the song ID
+     *            the song ID
      * @return the song response
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         song
-     *                                                                         not
-     *                                                                         found
+     *             if song not found
      */
     SongResponse getSongById(Long id);
 
@@ -40,7 +38,7 @@ public interface SongService {
      * Get all songs with pagination.
      *
      * @param pageable
-     *                 pagination information
+     *            pagination information
      * @return page of song responses
      */
     Page<SongResponse> getAllSongs(Pageable pageable);
@@ -49,15 +47,12 @@ public interface SongService {
      * Update an existing song.
      *
      * @param id
-     *                the song ID
+     *            the song ID
      * @param request
-     *                the song update request
+     *            the song update request
      * @return the updated song response
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         song
-     *                                                                         not
-     *                                                                         found
+     *             if song not found
      */
     SongResponse updateSong(Long id, UpdateSongRequest request);
 
@@ -65,12 +60,9 @@ public interface SongService {
      * Delete a song by ID.
      *
      * @param id
-     *           the song ID
+     *            the song ID
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         song
-     *                                                                         not
-     *                                                                         found
+     *             if song not found
      */
     void deleteSong(Long id);
 
@@ -78,13 +70,10 @@ public interface SongService {
      * Get all songs by album ID.
      *
      * @param albumId
-     *                the album ID
+     *            the album ID
      * @return list of song responses
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         album
-     *                                                                         not
-     *                                                                         found
+     *             if album not found
      */
     List<SongResponse> getSongsByAlbum(Long albumId);
 }

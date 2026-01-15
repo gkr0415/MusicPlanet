@@ -26,7 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
-public class SongServiceImpl implements SongService {
+public class SongServiceImpl implements SongService
+{
 
     private final SongRepository songRepository;
     private final AlbumRepository albumRepository;
@@ -34,7 +35,8 @@ public class SongServiceImpl implements SongService {
 
     @Override
     @Transactional
-    public SongResponse createSong(CreateSongRequest request) {
+    public SongResponse createSong(CreateSongRequest request)
+    {
         log.info("Creating new song with title: {}", request.getTitle());
 
         // Verify album exists
@@ -50,7 +52,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public SongResponse getSongById(Long id) {
+    public SongResponse getSongById(Long id)
+    {
         log.info("Fetching song with ID: {}", id);
 
         Song song = songRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Song", id));
@@ -59,7 +62,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Page<SongResponse> getAllSongs(Pageable pageable) {
+    public Page<SongResponse> getAllSongs(Pageable pageable)
+    {
         log.info("Fetching all songs - Page: {}, Size: {}", pageable.getPageNumber(), pageable.getPageSize());
 
         Page<Song> songsPage = songRepository.findAll(pageable);
@@ -70,13 +74,15 @@ public class SongServiceImpl implements SongService {
 
     @Override
     @Transactional
-    public SongResponse updateSong(Long id, UpdateSongRequest request) {
+    public SongResponse updateSong(Long id, UpdateSongRequest request)
+    {
         log.info("Updating song with ID: {}", id);
 
         Song song = songRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Song", id));
 
         // If albumId is being updated, verify it exists
-        if (request.getAlbumId() != null && !request.getAlbumId().equals(song.getAlbum().getId())) {
+        if (request.getAlbumId() != null && !request.getAlbumId().equals(song.getAlbum().getId()))
+        {
             Album album = albumRepository.findById(request.getAlbumId())
                     .orElseThrow(() -> new EntityNotFoundException("Album", request.getAlbumId()));
             song.setAlbum(album);
@@ -93,10 +99,12 @@ public class SongServiceImpl implements SongService {
 
     @Override
     @Transactional
-    public void deleteSong(Long id) {
+    public void deleteSong(Long id)
+    {
         log.info("Deleting song with ID: {}", id);
 
-        if (!songRepository.existsById(id)) {
+        if (!songRepository.existsById(id))
+        {
             throw new EntityNotFoundException("Song", id);
         }
 
@@ -105,7 +113,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public List<SongResponse> getSongsByAlbum(Long albumId) {
+    public List<SongResponse> getSongsByAlbum(Long albumId)
+    {
         log.info("Fetching songs for album ID: {}", albumId);
 
         // Verify album exists

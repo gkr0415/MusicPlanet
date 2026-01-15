@@ -36,7 +36,8 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("GenreService Unit Tests")
-class GenreServiceImplTest {
+class GenreServiceImplTest
+{
 
     @Mock
     private GenreRepository genreRepository;
@@ -61,7 +62,8 @@ class GenreServiceImplTest {
     private AlbumResponse albumResponse;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         genre = Genre.builder().id(1L).name("Rock").description("Rock music genre").build();
 
         genreResponse = GenreResponse.builder().id(1L).name("Rock").description("Rock music genre").build();
@@ -127,7 +129,8 @@ class GenreServiceImplTest {
 
     @Test
     @DisplayName("Should get all genres successfully")
-    void getAllGenres_withPageable_shouldReturnPagedGenres() {
+    void getAllGenres_withPageable_shouldReturnPagedGenres()
+    {
         // Arrange
         Genre genre2 = Genre.builder().id(2L).name("Jazz").description("Jazz music genre").build();
         List<Genre> genres = Arrays.asList(genre, genre2);

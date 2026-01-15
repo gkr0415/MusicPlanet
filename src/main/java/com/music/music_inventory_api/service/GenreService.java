@@ -12,13 +12,14 @@ import org.springframework.data.domain.Pageable;
  * Service interface for Genre entity operations. Defines business logic for
  * managing genres.
  */
-public interface GenreService {
+public interface GenreService
+{
 
     /**
      * Create a new genre.
      *
      * @param request
-     *                the genre creation request
+     *            the genre creation request
      * @return the created genre response
      */
     GenreResponse createGenre(CreateGenreRequest request);
@@ -27,13 +28,10 @@ public interface GenreService {
      * Get genre by ID.
      *
      * @param id
-     *           the genre ID
+     *            the genre ID
      * @return the genre response
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         genre
-     *                                                                         not
-     *                                                                         found
+     *             if genre not found
      */
     GenreResponse getGenreById(Long id);
 
@@ -41,7 +39,7 @@ public interface GenreService {
      * Get all genres with pagination.
      *
      * @param pageable
-     *                 pagination information
+     *            pagination information
      * @return page of genre responses
      */
     Page<GenreResponse> getAllGenres(Pageable pageable);
@@ -50,15 +48,12 @@ public interface GenreService {
      * Update an existing genre.
      *
      * @param id
-     *                the genre ID
+     *            the genre ID
      * @param request
-     *                the genre update request
+     *            the genre update request
      * @return the updated genre response
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         genre
-     *                                                                         not
-     *                                                                         found
+     *             if genre not found
      */
     GenreResponse updateGenre(Long id, UpdateGenreRequest request);
 
@@ -66,12 +61,9 @@ public interface GenreService {
      * Delete a genre by ID.
      *
      * @param id
-     *           the genre ID
+     *            the genre ID
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         genre
-     *                                                                         not
-     *                                                                         found
+     *             if genre not found
      */
     void deleteGenre(Long id);
 
@@ -79,13 +71,10 @@ public interface GenreService {
      * Get all albums by genre ID.
      *
      * @param genreId
-     *                the genre ID
+     *            the genre ID
      * @return list of album responses
      * @throws com.music.music_inventory_api.exception.EntityNotFoundException
-     *                                                                         if
-     *                                                                         genre
-     *                                                                         not
-     *                                                                         found
+     *             if genre not found
      */
     List<AlbumResponse> getAlbumsByGenre(Long genreId);
 }

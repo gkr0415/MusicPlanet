@@ -31,7 +31,8 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("SongService Unit Tests")
-class SongServiceImplTest {
+class SongServiceImplTest
+{
 
     @Mock
     private SongRepository songRepository;
@@ -52,7 +53,8 @@ class SongServiceImplTest {
     private Album album;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         album = Album.builder().id(1L).title("Abbey Road").build();
 
         song = Song.builder().id(1L).title("Come Together").album(album).trackNumber(1).durationSeconds(259).build();
@@ -131,7 +133,8 @@ class SongServiceImplTest {
 
     @Test
     @DisplayName("Should get all songs successfully")
-    void getAllSongs_withPageable_shouldReturnPagedSongs() {
+    void getAllSongs_withPageable_shouldReturnPagedSongs()
+    {
         // Arrange
         Song song2 = Song.builder().id(2L).title("Something").album(album).trackNumber(2).durationSeconds(182).build();
         List<Song> songs = Arrays.asList(song, song2);
@@ -170,7 +173,8 @@ class SongServiceImplTest {
 
     @Test
     @DisplayName("Should update song with new album")
-    void updateSong_withNewAlbumId_shouldUpdateAlbum() {
+    void updateSong_withNewAlbumId_shouldUpdateAlbum()
+    {
         // Arrange
         Album newAlbum = Album.builder().id(2L).title("Let It Be").build();
         UpdateSongRequest requestWithNewAlbum = UpdateSongRequest.builder().albumId(2L).build();
@@ -229,7 +233,8 @@ class SongServiceImplTest {
 
     @Test
     @DisplayName("Should get songs by album successfully")
-    void getSongsByAlbum_withExistingAlbum_shouldReturnSongs() {
+    void getSongsByAlbum_withExistingAlbum_shouldReturnSongs()
+    {
         // Arrange
         Song song2 = Song.builder().id(2L).title("Something").album(album).trackNumber(2).durationSeconds(182).build();
         List<Song> songs = Arrays.asList(song, song2);
