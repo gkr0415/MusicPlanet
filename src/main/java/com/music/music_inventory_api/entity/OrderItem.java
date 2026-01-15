@@ -1,13 +1,8 @@
 package com.music.music_inventory_api.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -21,13 +16,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Entity representing an item in an order.
- */
+/** Entity representing an item in an order. */
 @Entity
 @Table(name = "order_items")
 @Data
@@ -35,7 +32,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class OrderItem 
+public class OrderItem
 {
 
     @Id
@@ -76,32 +73,27 @@ public class OrderItem
     private LocalDateTime updatedAt;
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         OrderItem orderItem = (OrderItem) o;
         return Objects.equals(id, orderItem.id);
     }
 
     @Override
-    public int hashCode() 
+    public int hashCode()
     {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString() 
+    public String toString()
     {
-        return "OrderItem{" +
-                "id=" + id +
-                ", orderId=" + (order != null ? order.getId() : null) +
-                ", albumId=" + (album != null ? album.getId() : null) +
-                ", quantity=" + quantity +
-                ", unitPrice=" + unitPrice +
-                ", subtotal=" + subtotal +
-                ", createdAt=" + createdAt +
-                '}';
+        return "OrderItem{" + "id=" + id + ", orderId=" + (order != null ? order.getId() : null) + ", albumId="
+                + (album != null ? album.getId() : null) + ", quantity=" + quantity + ", unitPrice=" + unitPrice
+                + ", subtotal=" + subtotal + ", createdAt=" + createdAt + '}';
     }
 }
-

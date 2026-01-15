@@ -1,13 +1,7 @@
 package com.music.music_inventory_api.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -17,12 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Entity representing an artist in the music store.
- */
+/** Entity representing an artist in the music store. */
 @Entity
 @Table(name = "artists")
 @Data
@@ -30,7 +27,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Artist 
+public class Artist
 {
 
     @Id
@@ -58,29 +55,26 @@ public class Artist
     private LocalDateTime updatedAt;
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Artist artist = (Artist) o;
         return Objects.equals(id, artist.id);
     }
 
     @Override
-    public int hashCode() 
+    public int hashCode()
     {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString() 
+    public String toString()
     {
-        return "Artist{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", country='" + country + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Artist{" + "id=" + id + ", name='" + name + '\'' + ", country='" + country + '\'' + ", createdAt="
+                + createdAt + '}';
     }
 }
-

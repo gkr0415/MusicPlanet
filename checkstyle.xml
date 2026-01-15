@@ -58,7 +58,9 @@
         <!-- Checks for blocks -->
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock"/>
-        <module name="LeftCurly"/>
+        <module name="LeftCurly">
+            <property name="option" value="nl"/>
+        </module>        
         <module name="NeedBraces"/>
         <module name="RightCurly"/>
 

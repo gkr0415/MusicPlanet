@@ -1,21 +1,19 @@
 package com.music.music_inventory_api.dto.response;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-/**
- * Detailed DTO for customer response with order history.
- */
+/** Detailed DTO for customer response with order history. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerDetailResponse {
+public class CustomerDetailResponse
+{
 
     private Long id;
     private String email;
