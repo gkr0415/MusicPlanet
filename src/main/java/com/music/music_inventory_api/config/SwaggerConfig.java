@@ -30,7 +30,7 @@ public class SwaggerConfig
                         + "This API provides full CRUD operations and advanced search capabilities.")
                 .contact(new Contact().name("Music Store Team").email("support@musicstore.com"))
                 .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT")))
-                .servers(List.of(new Server().url("http://localhost:8080").description("Development Server"),
+                .servers(List.of(new Server().url("http://localhost:8081").description("Development Server"),
                         new Server().url("https://api.musicstore.com").description("Production Server")));
     }
 }
