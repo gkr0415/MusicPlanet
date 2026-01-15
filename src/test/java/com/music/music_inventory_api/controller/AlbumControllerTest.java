@@ -34,7 +34,8 @@ import org.springframework.test.web.servlet.MockMvc;
 /**
  * Unit tests for AlbumController.
  */
-@WebMvcTest(AlbumController.class)
+@WebMvcTest(controllers = AlbumController.class, excludeAutoConfiguration =
+{org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration.class})
 @ActiveProfiles("test")
 @SuppressWarnings("null")
 class AlbumControllerTest
