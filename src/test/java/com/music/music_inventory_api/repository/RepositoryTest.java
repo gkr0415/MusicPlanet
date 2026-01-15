@@ -1,5 +1,7 @@
 package com.music.music_inventory_api.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.music.music_inventory_api.entity.Album;
 import com.music.music_inventory_api.entity.Artist;
 import com.music.music_inventory_api.entity.Customer;
@@ -8,28 +10,25 @@ import com.music.music_inventory_api.entity.Order;
 import com.music.music_inventory_api.entity.OrderItem;
 import com.music.music_inventory_api.entity.Song;
 import com.music.music_inventory_api.enums.OrderStatus;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
- * Integration tests for all repository interfaces.
- * Uses @DataJpaTest for testing JPA repositories with an in-memory H2 database.
+ * Integration tests for all repository interfaces. Uses @DataJpaTest for
+ * testing JPA repositories with an in-memory H2 database.
  */
 @DataJpaTest
 @ActiveProfiles("test")
 @SuppressWarnings("null")
-class RepositoryTest 
+class RepositoryTest
 {
 
     @Autowired
@@ -71,7 +70,7 @@ class RepositoryTest
     private OrderItem orderItem2;
 
     @BeforeEach
-    void setUp() 
+    void setUp()
     {
         orderItemRepository.deleteAll();
         orderRepository.deleteAll();
@@ -191,7 +190,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByNameIgnoreCase_withExistingName_shouldReturnArtist() 
+    void findByNameIgnoreCase_withExistingName_shouldReturnArtist()
     {
         // Arrange & Act
         Optional<Artist> result = artistRepository.findByNameIgnoreCase("the beatles");
@@ -202,19 +201,18 @@ class RepositoryTest
     }
 
     @Test
-    void findByCountry_withExistingCountry_shouldReturnArtists() 
+    void findByCountry_withExistingCountry_shouldReturnArtists()
     {
         // Arrange & Act
         List<Artist> results = artistRepository.findByCountry("United Kingdom");
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results).extracting(Artist::getName)
-                .containsExactlyInAnyOrder("The Beatles", "Pink Floyd");
+        assertThat(results).extracting(Artist::getName).containsExactlyInAnyOrder("The Beatles", "Pink Floyd");
     }
 
     @Test
-    void searchByName_withKeyword_shouldReturnMatchingArtists() 
+    void searchByName_withKeyword_shouldReturnMatchingArtists()
     {
         // Arrange & Act
         List<Artist> results = artistRepository.searchByName("beatles");
@@ -225,19 +223,18 @@ class RepositoryTest
     }
 
     @Test
-    void findArtistsWithAvailableStock_whenAlbumsInStock_shouldReturnArtists() 
+    void findArtistsWithAvailableStock_whenAlbumsInStock_shouldReturnArtists()
     {
         // Arrange & Act
         List<Artist> results = artistRepository.findArtistsWithAvailableStock();
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results).extracting(Artist::getName)
-                .contains("The Beatles", "Pink Floyd");
+        assertThat(results).extracting(Artist::getName).contains("The Beatles", "Pink Floyd");
     }
 
     @Test
-    void findArtistsOrderedByAlbumCount_whenArtistsHaveAlbums_shouldReturnSortedList() 
+    void findArtistsOrderedByAlbumCount_whenArtistsHaveAlbums_shouldReturnSortedList()
     {
         // Arrange & Act
         List<Artist> results = artistRepository.findArtistsOrderedByAlbumCount();
@@ -248,7 +245,7 @@ class RepositoryTest
     }
 
     @Test
-    void searchByGenreAndPriceRange_withValidCriteria_shouldReturnMatchingAlbums() 
+    void searchByGenreAndPriceRange_withValidCriteria_shouldReturnMatchingAlbums()
     {
         // Arrange
         BigDecimal minPrice = new BigDecimal("15.00");
@@ -259,12 +256,11 @@ class RepositoryTest
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results).extracting(Album::getTitle)
-                .contains("Abbey Road", "Let It Be");
+        assertThat(results).extracting(Album::getTitle).contains("Abbey Road", "Let It Be");
     }
 
     @Test
-    void findTopSellingAlbums_whenOrderItemsExist_shouldReturnTopAlbums() 
+    void findTopSellingAlbums_whenOrderItemsExist_shouldReturnTopAlbums()
     {
         // Arrange & Act
         List<Album> results = albumRepository.findTopSellingAlbums();
@@ -275,7 +271,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByArtistWithStock_withArtistHavingStock_shouldReturnAlbums() 
+    void findByArtistWithStock_withArtistHavingStock_shouldReturnAlbums()
     {
         // Arrange & Act
         List<Album> results = albumRepository.findByArtistWithStock(artist1.getId());
@@ -286,19 +282,18 @@ class RepositoryTest
     }
 
     @Test
-    void searchByTitleOrArtistName_withKeyword_shouldReturnMatchingAlbums() 
+    void searchByTitleOrArtistName_withKeyword_shouldReturnMatchingAlbums()
     {
         // Arrange & Act
         List<Album> results = albumRepository.searchByTitleOrArtistName("beatles");
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results).extracting(Album::getTitle)
-                .contains("Abbey Road", "Let It Be");
+        assertThat(results).extracting(Album::getTitle).contains("Abbey Road", "Let It Be");
     }
 
     @Test
-    void findByReleaseYear_withValidYear_shouldReturnAlbums() 
+    void findByReleaseYear_withValidYear_shouldReturnAlbums()
     {
         // Arrange & Act
         List<Album> results = albumRepository.findByReleaseYear(1969);
@@ -309,7 +304,7 @@ class RepositoryTest
     }
 
     @Test
-    void findLowStockAlbums_withThreshold_shouldReturnLowStockAlbums() 
+    void findLowStockAlbums_withThreshold_shouldReturnLowStockAlbums()
     {
         // Arrange & Act
         List<Album> results = albumRepository.findLowStockAlbums(40);
@@ -320,19 +315,18 @@ class RepositoryTest
     }
 
     @Test
-    void findByAlbumId_withValidAlbumId_shouldReturnSongs() 
+    void findByAlbumId_withValidAlbumId_shouldReturnSongs()
     {
         // Arrange & Act
         List<Song> results = songRepository.findByAlbumId(album1.getId());
 
         // Assert
         assertThat(results).hasSize(2);
-        assertThat(results).extracting(Song::getTitle)
-                .contains("Come Together", "Something");
+        assertThat(results).extracting(Song::getTitle).contains("Come Together", "Something");
     }
 
     @Test
-    void findByDurationRange_withValidRange_shouldReturnSongs() 
+    void findByDurationRange_withValidRange_shouldReturnSongs()
     {
         // Arrange & Act
         List<Song> results = songRepository.findByDurationRange(180, 260);
@@ -342,7 +336,7 @@ class RepositoryTest
     }
 
     @Test
-    void searchByTitle_withKeyword_shouldReturnMatchingSongs() 
+    void searchByTitle_withKeyword_shouldReturnMatchingSongs()
     {
         // Arrange & Act
         List<Song> results = songRepository.searchByTitle("together");
@@ -353,7 +347,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByArtistName_withValidArtist_shouldReturnSongs() 
+    void findByArtistName_withValidArtist_shouldReturnSongs()
     {
         // Arrange & Act
         List<Song> results = songRepository.findByArtistName("The Beatles");
@@ -363,7 +357,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByAlbumOrderedByTrackNumber_withValidAlbumId_shouldReturnOrderedSongs() 
+    void findByAlbumOrderedByTrackNumber_withValidAlbumId_shouldReturnOrderedSongs()
     {
         // Arrange & Act
         List<Song> results = songRepository.findByAlbumOrderedByTrackNumber(album1.getId());
@@ -375,7 +369,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByNameIgnoreCase_withExistingName_shouldReturnGenre() 
+    void findByNameIgnoreCase_withExistingName_shouldReturnGenre()
     {
         // Arrange & Act
         Optional<Genre> result = genreRepository.findByNameIgnoreCase("rock");
@@ -386,7 +380,7 @@ class RepositoryTest
     }
 
     @Test
-    void searchByKeyword_withKeyword_shouldReturnMatchingGenres() 
+    void searchByKeyword_withKeyword_shouldReturnMatchingGenres()
     {
         // Arrange & Act
         List<Genre> results = genreRepository.searchByKeyword("pop");
@@ -397,7 +391,7 @@ class RepositoryTest
     }
 
     @Test
-    void findGenresOrderedByAlbumCount_whenGenresHaveAlbums_shouldReturnSortedList() 
+    void findGenresOrderedByAlbumCount_whenGenresHaveAlbums_shouldReturnSortedList()
     {
         // Arrange & Act
         List<Genre> results = genreRepository.findGenresOrderedByAlbumCount();
@@ -408,7 +402,7 @@ class RepositoryTest
     }
 
     @Test
-    void findGenresWithAvailableStock_whenAlbumsInStock_shouldReturnGenres() 
+    void findGenresWithAvailableStock_whenAlbumsInStock_shouldReturnGenres()
     {
         // Arrange & Act
         List<Genre> results = genreRepository.findGenresWithAvailableStock();
@@ -419,7 +413,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByEmailIgnoreCase_withExistingEmail_shouldReturnCustomer() 
+    void findByEmailIgnoreCase_withExistingEmail_shouldReturnCustomer()
     {
         // Arrange & Act
         Optional<Customer> result = customerRepository.findByEmailIgnoreCase("JOHN.DOE@EXAMPLE.COM");
@@ -430,7 +424,7 @@ class RepositoryTest
     }
 
     @Test
-    void searchByName_withKeyword_shouldReturnMatchingCustomers() 
+    void searchByName_withKeyword_shouldReturnMatchingCustomers()
     {
         // Arrange & Act
         List<Customer> results = customerRepository.searchByName("john");
@@ -441,7 +435,7 @@ class RepositoryTest
     }
 
     @Test
-    void findCustomersWithOrdersAfter_withValidDate_shouldReturnCustomers() 
+    void findCustomersWithOrdersAfter_withValidDate_shouldReturnCustomers()
     {
         // Arrange
         LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
@@ -455,7 +449,7 @@ class RepositoryTest
     }
 
     @Test
-    void findCustomersWithNoOrders_whenCustomerHasNoOrders_shouldReturnCustomers() 
+    void findCustomersWithNoOrders_whenCustomerHasNoOrders_shouldReturnCustomers()
     {
         // Arrange & Act
         List<Customer> results = customerRepository.findCustomersWithNoOrders();
@@ -466,7 +460,7 @@ class RepositoryTest
     }
 
     @Test
-    void findTopCustomersByOrderCount_whenCustomersHaveOrders_shouldReturnSortedList() 
+    void findTopCustomersByOrderCount_whenCustomersHaveOrders_shouldReturnSortedList()
     {
         // Arrange & Act
         List<Customer> results = customerRepository.findTopCustomersByOrderCount();
@@ -477,7 +471,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByCustomerId_withValidCustomerId_shouldReturnOrders() 
+    void findByCustomerId_withValidCustomerId_shouldReturnOrders()
     {
         // Arrange & Act
         List<Order> results = orderRepository.findByCustomerId(customer1.getId());
@@ -487,7 +481,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByStatus_withValidStatus_shouldReturnOrders() 
+    void findByStatus_withValidStatus_shouldReturnOrders()
     {
         // Arrange & Act
         List<Order> results = orderRepository.findByStatus(OrderStatus.DELIVERED);
@@ -498,7 +492,7 @@ class RepositoryTest
     }
 
     @Test
-    void getCustomerOrderStatistics_withValidCustomerId_shouldReturnStatistics() 
+    void getCustomerOrderStatistics_withValidCustomerId_shouldReturnStatistics()
     {
         // Arrange & Act
         Object[] statistics = orderRepository.getCustomerOrderStatistics(customer1.getId());
@@ -506,20 +500,20 @@ class RepositoryTest
         // Assert
         assertThat(statistics).isNotNull();
         assertThat(statistics.length).isGreaterThan(0);
-        
+
         Object[] innerArray = (Object[]) statistics[0];
-        
+
         Long orderCount = ((Number) innerArray[0]).longValue();
         BigDecimal totalAmount = (BigDecimal) innerArray[1];
         Double avgAmount = ((Number) innerArray[2]).doubleValue();
-        
+
         assertThat(orderCount).isEqualTo(2);
         assertThat(totalAmount).isGreaterThan(BigDecimal.ZERO);
         assertThat(avgAmount).isGreaterThan(0.0);
     }
 
     @Test
-    void findByDateRange_withValidRange_shouldReturnOrders() 
+    void findByDateRange_withValidRange_shouldReturnOrders()
     {
         // Arrange
         LocalDateTime start = LocalDateTime.now().minusDays(1);
@@ -533,13 +527,10 @@ class RepositoryTest
     }
 
     @Test
-    void findByCustomerAndStatus_withValidCriteria_shouldReturnOrders() 
+    void findByCustomerAndStatus_withValidCriteria_shouldReturnOrders()
     {
         // Arrange & Act
-        List<Order> results = orderRepository.findByCustomerAndStatus(
-                customer1.getId(),
-                OrderStatus.PENDING
-        );
+        List<Order> results = orderRepository.findByCustomerAndStatus(customer1.getId(), OrderStatus.PENDING);
 
         // Assert
         assertThat(results).hasSize(1);
@@ -547,7 +538,7 @@ class RepositoryTest
     }
 
     @Test
-    void findOrdersAboveAmount_withThreshold_shouldReturnOrders() 
+    void findOrdersAboveAmount_withThreshold_shouldReturnOrders()
     {
         // Arrange & Act
         List<Order> results = orderRepository.findOrdersAboveAmount(new BigDecimal("30.00"));
@@ -558,7 +549,7 @@ class RepositoryTest
     }
 
     @Test
-    void calculateTotalRevenue_withDateRange_shouldReturnRevenue() 
+    void calculateTotalRevenue_withDateRange_shouldReturnRevenue()
     {
         // Arrange
         LocalDateTime start = LocalDateTime.now().minusDays(1);
@@ -573,7 +564,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByOrderId_withValidOrderId_shouldReturnOrderItems() 
+    void findByOrderId_withValidOrderId_shouldReturnOrderItems()
     {
         // Arrange & Act
         List<OrderItem> results = orderItemRepository.findByOrderId(order1.getId());
@@ -584,7 +575,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByAlbumId_withValidAlbumId_shouldReturnOrderItems() 
+    void findByAlbumId_withValidAlbumId_shouldReturnOrderItems()
     {
         // Arrange & Act
         List<OrderItem> results = orderItemRepository.findByAlbumId(album1.getId());
@@ -594,7 +585,7 @@ class RepositoryTest
     }
 
     @Test
-    void calculateTotalQuantitySold_withValidAlbumId_shouldReturnQuantity() 
+    void calculateTotalQuantitySold_withValidAlbumId_shouldReturnQuantity()
     {
         // Arrange & Act
         Long totalQuantity = orderItemRepository.calculateTotalQuantitySold(album1.getId());
@@ -604,7 +595,7 @@ class RepositoryTest
     }
 
     @Test
-    void calculateAlbumRevenue_withValidAlbumId_shouldReturnRevenue() 
+    void calculateAlbumRevenue_withValidAlbumId_shouldReturnRevenue()
     {
         // Arrange & Act
         BigDecimal revenue = orderItemRepository.calculateAlbumRevenue(album1.getId());
@@ -615,7 +606,7 @@ class RepositoryTest
     }
 
     @Test
-    void findByCustomerId_withValidCustomerId_shouldReturnOrderItems() 
+    void findByCustomerId_withValidCustomerId_shouldReturnOrderItems()
     {
         // Arrange & Act
         List<OrderItem> results = orderItemRepository.findByCustomerId(customer1.getId());
@@ -625,7 +616,7 @@ class RepositoryTest
     }
 
     @Test
-    void findMostPopularAlbums_whenOrderItemsExist_shouldReturnPopularAlbums() 
+    void findMostPopularAlbums_whenOrderItemsExist_shouldReturnPopularAlbums()
     {
         // Arrange & Act
         List<Object[]> results = orderItemRepository.findMostPopularAlbums();
@@ -635,4 +626,3 @@ class RepositoryTest
         assertThat(results.get(0)[1]).isNotNull();
     }
 }
-

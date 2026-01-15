@@ -1,13 +1,7 @@
 package com.music.music_inventory_api.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -22,12 +16,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Entity representing a song/track in an album.
- */
+/** Entity representing a song/track in an album. */
 @Entity
 @Table(name = "songs")
 @Data
@@ -35,7 +32,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Song 
+public class Song
 {
 
     @Id
@@ -70,31 +67,27 @@ public class Song
     private LocalDateTime updatedAt;
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Song song = (Song) o;
         return Objects.equals(id, song.id);
     }
 
     @Override
-    public int hashCode() 
+    public int hashCode()
     {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString() 
+    public String toString()
     {
-        return "Song{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", albumId=" + (album != null ? album.getId() : null) +
-                ", trackNumber=" + trackNumber +
-                ", durationSeconds=" + durationSeconds +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Song{" + "id=" + id + ", title='" + title + '\'' + ", albumId=" + (album != null ? album.getId() : null)
+                + ", trackNumber=" + trackNumber + ", durationSeconds=" + durationSeconds + ", createdAt=" + createdAt
+                + '}';
     }
 }
-

@@ -3,13 +3,13 @@ package com.music.music_inventory_api.mapper;
 import com.music.music_inventory_api.dto.request.CreateSongRequest;
 import com.music.music_inventory_api.dto.response.SongResponse;
 import com.music.music_inventory_api.entity.Song;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
 @Mapper(componentModel = "spring")
-public interface SongMapper {
+public interface SongMapper
+{
 
     @Mapping(source = "album.id", target = "albumId")
     SongResponse toResponse(Song song);

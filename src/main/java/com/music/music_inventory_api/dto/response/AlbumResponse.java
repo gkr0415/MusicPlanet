@@ -1,23 +1,21 @@
 package com.music.music_inventory_api.dto.response;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
-
-/**
- * DTO for album response.
- */
+/** DTO for album response. */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlbumResponse {
+public class AlbumResponse
+{
 
     private Long id;
     private String title;

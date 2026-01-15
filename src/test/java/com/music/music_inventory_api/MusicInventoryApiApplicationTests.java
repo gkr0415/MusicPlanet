@@ -8,11 +8,11 @@ import org.springframework.test.context.ActiveProfiles;
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-class MusicInventoryApiApplicationTests 
+class MusicInventoryApiApplicationTests
 {
 
     @Test
-    void contextLoads() 
-	{
+    void contextLoads()
+    {
     }
 }

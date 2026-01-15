@@ -1,14 +1,11 @@
 package com.music.music_inventory_api.entity;
 
 import com.music.music_inventory_api.enums.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,15 +22,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Entity representing a customer order.
- */
+/** Entity representing a customer order. */
 @Entity
 @Table(name = "orders")
 @Data
@@ -41,7 +38,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Order 
+public class Order
 {
 
     @Id
@@ -91,42 +88,40 @@ public class Order
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void addOrderItem(OrderItem orderItem) 
+    public void addOrderItem(OrderItem orderItem)
     {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
 
-    public void removeOrderItem(OrderItem orderItem) 
+    public void removeOrderItem(OrderItem orderItem)
     {
         orderItems.remove(orderItem);
         orderItem.setOrder(null);
     }
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Order order = (Order) o;
         return Objects.equals(id, order.id);
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", customerId=" + (customer != null ? customer.getId() : null) +
-                ", status=" + status +
-                ", totalAmount=" + totalAmount +
-                ", orderDate=" + orderDate +
-                ", createdAt=" + createdAt +
-                '}';
+    public String toString()
+    {
+        return "Order{" + "id=" + id + ", customerId=" + (customer != null ? customer.getId() : null) + ", status="
+                + status + ", totalAmount=" + totalAmount + ", orderDate=" + orderDate + ", createdAt=" + createdAt
+                + '}';
     }
 }
-

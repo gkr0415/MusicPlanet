@@ -1,13 +1,11 @@
 package com.music.music_inventory_api.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,16 +24,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Entity representing a music album.
- */
+/** Entity representing a music album. */
 @Entity
 @Table(name = "albums")
 @Data
@@ -43,7 +40,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Album 
+public class Album
 {
 
     @Id
@@ -91,12 +88,9 @@ public class Album
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "album_genres",
-        joinColumns = @JoinColumn(name = "album_id"),
-        inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
+    @ManyToMany(cascade =
+    {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "album_genres", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Builder.Default
     private Set<Genre> genres = new HashSet<>();
 
@@ -108,43 +102,38 @@ public class Album
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public void addGenre(Genre genre) 
+    public void addGenre(Genre genre)
     {
         this.genres.add(genre);
     }
 
-    public void removeGenre(Genre genre) 
+    public void removeGenre(Genre genre)
     {
         this.genres.remove(genre);
     }
 
     @Override
-    public boolean equals(Object o) 
+    public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Album album = (Album) o;
         return Objects.equals(id, album.id);
     }
 
     @Override
-    public int hashCode() 
+    public int hashCode()
     {
         return Objects.hash(id);
     }
 
     @Override
-    public String toString() 
+    public String toString()
     {
-        return "Album{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", artistId=" + (artist != null ? artist.getId() : null) +
-                ", releaseDate=" + releaseDate +
-                ", price=" + price +
-                ", stockQuantity=" + stockQuantity +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Album{" + "id=" + id + ", title='" + title + '\'' + ", artistId="
+                + (artist != null ? artist.getId() : null) + ", releaseDate=" + releaseDate + ", price=" + price
+                + ", stockQuantity=" + stockQuantity + ", createdAt=" + createdAt + '}';
     }
 }
-
