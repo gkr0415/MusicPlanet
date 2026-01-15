@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Swagger/OpenAPI configuration for API documentation. Access Swagger UI at:
- * http://localhost:8080/swagger-ui.html Access API docs at:
- * http://localhost:8080/api-docs
+ * http://localhost:8081/swagger-ui.html Access API docs at:
+ * http://localhost:8081/api-docs
  */
 @Configuration
 public class SwaggerConfig
@@ -30,7 +30,7 @@ public class SwaggerConfig
                         + "This API provides full CRUD operations and advanced search capabilities.")
                 .contact(new Contact().name("Music Store Team").email("support@musicstore.com"))
                 .license(new License().name("MIT License").url("https://opensource.org/licenses/MIT")))
-                .servers(List.of(new Server().url("http://localhost:8080").description("Development Server"),
+                .servers(List.of(new Server().url("http://localhost:8081").description("Development Server"),
                         new Server().url("https://api.musicstore.com").description("Production Server")));
     }
 }
