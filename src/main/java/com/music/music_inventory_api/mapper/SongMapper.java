@@ -1,0 +1,24 @@
+package com.music.music_inventory_api.mapper;
+
+import com.music.music_inventory_api.dto.request.CreateSongRequest;
+import com.music.music_inventory_api.dto.response.SongResponse;
+import com.music.music_inventory_api.entity.Song;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
+
+@Mapper(componentModel = "spring")
+public interface SongMapper {
+
+    @Mapping(source = "album.id", target = "albumId")
+    SongResponse toResponse(Song song);
+
+    @Mapping(source = "albumId", target = "album.id")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    Song toEntity(CreateSongRequest request);
+
+    List<SongResponse> toResponseList(List<Song> songs);
+}

@@ -1,0 +1,66 @@
+package com.music.music_inventory_api.mapper;
+
+import com.music.music_inventory_api.dto.response.OrderResponse;
+import com.music.music_inventory_api.entity.Customer;
+import com.music.music_inventory_api.entity.Order;
+import com.music.music_inventory_api.enums.OrderStatus;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+class OrderMapperTest {
+
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Test
+    void shouldMapOrderToResponse() {
+        Customer customer = Customer.builder()
+                .id(1L)
+                .firstName("John")
+                .lastName("Doe")
+                .build();
+
+        Order order = Order.builder()
+                .id(1L)
+                .customer(customer)
+                .orderDate(LocalDateTime.now())
+                .totalAmount(new BigDecimal("99.99"))
+                .status(OrderStatus.PENDING)
+                .build();
+
+        OrderResponse response = orderMapper.toResponse(order);
+
+        assertNotNull(response);
+        assertEquals(order.getId(), response.getId());
+        assertEquals(customer.getId(), response.getCustomerId());
+        assertEquals(customer.getFirstName(), response.getCustomerName());
+        assertEquals(order.getTotalAmount(), response.getTotalAmount());
+        assertEquals(order.getStatus(), response.getStatus());
+    }
+
+    @Test
+    void shouldMapOrderListToResponseList() {
+        Customer customer = Customer.builder().id(1L).firstName("Test").build();
+        
+        List<Order> orders = Arrays.asList(
+                Order.builder().id(1L).customer(customer).totalAmount(new BigDecimal("10.00")).status(OrderStatus.PENDING).build(),
+                Order.builder().id(2L).customer(customer).totalAmount(new BigDecimal("20.00")).status(OrderStatus.SHIPPED).build()
+        );
+
+        List<OrderResponse> responses = orderMapper.toResponseList(orders);
+
+        assertNotNull(responses);
+        assertEquals(2, responses.size());
+        assertEquals(OrderStatus.PENDING, responses.get(0).getStatus());
+        assertEquals(OrderStatus.SHIPPED, responses.get(1).getStatus());
+    }
+}
