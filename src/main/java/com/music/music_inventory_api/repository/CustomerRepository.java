@@ -54,12 +54,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>
     /**
      * Custom query to find top customers by order count.
      *
-     * @param limit maximum number of results
      * @return list of customers ordered by number of orders descending
      */
     @Query("SELECT o.customer FROM Order o " +
            "GROUP BY o.customer " +
            "ORDER BY COUNT(o) DESC")
-    List<Customer> findTopCustomersByOrderCount(@Param("limit") int limit);
+    List<Customer> findTopCustomersByOrderCount();
 }
 

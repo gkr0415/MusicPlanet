@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DataJpaTest
 @ActiveProfiles("test")
+@SuppressWarnings("null")
 class RepositoryTest 
 {
 
@@ -266,7 +267,7 @@ class RepositoryTest
     void findTopSellingAlbums_whenOrderItemsExist_shouldReturnTopAlbums() 
     {
         // Arrange & Act
-        List<Album> results = albumRepository.findTopSellingAlbums(5);
+        List<Album> results = albumRepository.findTopSellingAlbums();
 
         // Assert
         assertThat(results).isNotEmpty();
@@ -468,7 +469,7 @@ class RepositoryTest
     void findTopCustomersByOrderCount_whenCustomersHaveOrders_shouldReturnSortedList() 
     {
         // Arrange & Act
-        List<Customer> results = customerRepository.findTopCustomersByOrderCount(5);
+        List<Customer> results = customerRepository.findTopCustomersByOrderCount();
 
         // Assert
         assertThat(results).isNotEmpty();
@@ -627,7 +628,7 @@ class RepositoryTest
     void findMostPopularAlbums_whenOrderItemsExist_shouldReturnPopularAlbums() 
     {
         // Arrange & Act
-        List<Object[]> results = orderItemRepository.findMostPopularAlbums(5);
+        List<Object[]> results = orderItemRepository.findMostPopularAlbums();
 
         // Assert
         assertThat(results).isNotEmpty();

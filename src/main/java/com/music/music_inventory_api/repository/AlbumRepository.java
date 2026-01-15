@@ -42,13 +42,12 @@ public interface AlbumRepository extends JpaRepository<Album, Long>
      * Custom query to find top-selling albums.
      * One of the required @Query examples.
      *
-     * @param limit maximum number of results
      * @return list of top-selling albums ordered by total quantity sold
      */
     @Query("SELECT oi.album FROM OrderItem oi " +
            "GROUP BY oi.album " +
            "ORDER BY SUM(oi.quantity) DESC")
-    List<Album> findTopSellingAlbums(@Param("limit") int limit);
+    List<Album> findTopSellingAlbums();
 
     /**
      * Custom query to find albums by artist with available stock.

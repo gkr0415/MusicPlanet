@@ -55,13 +55,12 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long>
     /**
      * Custom query to find most popular albums (by quantity sold).
      *
-     * @param limit maximum number of results
      * @return list of order items grouped by album, ordered by total quantity
      */
     @Query("SELECT oi.album.id, SUM(oi.quantity) as totalQty " +
            "FROM OrderItem oi " +
            "GROUP BY oi.album.id " +
            "ORDER BY totalQty DESC")
-    List<Object[]> findMostPopularAlbums(@Param("limit") int limit);
+    List<Object[]> findMostPopularAlbums();
 }
 
