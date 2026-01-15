@@ -63,6 +63,17 @@ public class Album
     @Column(name = "release_date")
     private LocalDate releaseDate;
 
+    @Column(name = "release_year")
+    private Integer releaseYear;
+
+    @Size(max = 50, message = "Format must not exceed 50 characters")
+    @Column(length = 50)
+    private String format;
+
+    @Size(max = 100, message = "Label must not exceed 100 characters")
+    @Column(length = 100)
+    private String label;
+
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")
     @Column(nullable = false, precision = 10, scale = 2)
