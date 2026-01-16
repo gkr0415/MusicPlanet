@@ -43,7 +43,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
-class OrderControllerIntegrationTest {
+class OrderControllerIntegrationTest
+{
     @Autowired
     private MockMvc mockMvc;
 
@@ -73,7 +74,8 @@ class OrderControllerIntegrationTest {
     private Album testAlbum2;
 
     @BeforeEach
-    void setUp() {
+    void setUp()
+    {
         // Clean up
         orderItemRepository.deleteAll();
         orderRepository.deleteAll();
@@ -128,7 +130,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void createOrder_withValidRequest_shouldReturnCreatedOrder() throws Exception {
+    void createOrder_withValidRequest_shouldReturnCreatedOrder() throws Exception
+    {
         // Arrange
         CreateOrderItemRequest item1 = CreateOrderItemRequest.builder().albumId(testAlbum1.getId()).quantity(2).build();
 
@@ -152,7 +155,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void createOrder_withNonExistentCustomer_shouldReturnNotFound() throws Exception {
+    void createOrder_withNonExistentCustomer_shouldReturnNotFound() throws Exception
+    {
         // Arrange
         CreateOrderItemRequest item = CreateOrderItemRequest.builder().albumId(testAlbum1.getId()).quantity(1).build();
 
@@ -164,7 +168,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void createOrder_withNonExistentAlbum_shouldReturnNotFound() throws Exception {
+    void createOrder_withNonExistentAlbum_shouldReturnNotFound() throws Exception
+    {
         // Arrange
         CreateOrderItemRequest item = CreateOrderItemRequest.builder().albumId(999L).quantity(1).build();
 
@@ -177,7 +182,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void createOrder_withInsufficientStock_shouldReturnBadRequest() throws Exception {
+    void createOrder_withInsufficientStock_shouldReturnBadRequest() throws Exception
+    {
         // Arrange
         CreateOrderItemRequest item = CreateOrderItemRequest.builder().albumId(testAlbum1.getId()).quantity(100)
                 .build();
@@ -191,7 +197,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void getOrderById_withExistingId_shouldReturnOrder() throws Exception {
+    void getOrderById_withExistingId_shouldReturnOrder() throws Exception
+    {
         // Arrange
         Order order = createTestOrder();
 
@@ -203,13 +210,15 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void getOrderById_withNonExistentId_shouldReturnNotFound() throws Exception {
+    void getOrderById_withNonExistentId_shouldReturnNotFound() throws Exception
+    {
         // Act & Assert
         mockMvc.perform(get("/api/orders/{id}", 999L)).andExpect(status().isNotFound());
     }
 
     @Test
-    void getOrdersByCustomer_shouldReturnCustomerOrders() throws Exception {
+    void getOrdersByCustomer_shouldReturnCustomerOrders() throws Exception
+    {
         // Arrange
         createTestOrder();
         createTestOrder();
@@ -222,14 +231,16 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void getOrdersByCustomer_withNoOrders_shouldReturnEmptyList() throws Exception {
+    void getOrdersByCustomer_withNoOrders_shouldReturnEmptyList() throws Exception
+    {
         // Act & Assert
         mockMvc.perform(get("/api/orders/customer/{customerId}", testCustomer.getId())).andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
     @Test
-    void updateOrderStatus_withValidStatus_shouldUpdateOrder() throws Exception {
+    void updateOrderStatus_withValidStatus_shouldUpdateOrder() throws Exception
+    {
         // Arrange
         Order order = createTestOrder();
 
@@ -240,7 +251,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void updateOrderStatus_withCancelledOrder_shouldReturnBadRequest() throws Exception {
+    void updateOrderStatus_withCancelledOrder_shouldReturnBadRequest() throws Exception
+    {
         // Arrange
         Order order = createTestOrder();
         order.setStatus(OrderStatus.CANCELLED);
@@ -252,7 +264,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void cancelOrder_withPendingOrder_shouldCancelAndRestoreStock() throws Exception {
+    void cancelOrder_withPendingOrder_shouldCancelAndRestoreStock() throws Exception
+    {
         // Arrange
         Order order = createTestOrder();
         int initialStock = testAlbum1.getStockQuantity();
@@ -270,7 +283,8 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void cancelOrder_withShippedOrder_shouldReturnBadRequest() throws Exception {
+    void cancelOrder_withShippedOrder_shouldReturnBadRequest() throws Exception
+    {
         // Arrange
         Order order = createTestOrder();
         order.setStatus(OrderStatus.SHIPPED);
@@ -281,12 +295,14 @@ class OrderControllerIntegrationTest {
     }
 
     @Test
-    void cancelOrder_withNonExistentOrder_shouldReturnNotFound() throws Exception {
+    void cancelOrder_withNonExistentOrder_shouldReturnNotFound() throws Exception
+    {
         // Act & Assert
         mockMvc.perform(post("/api/orders/{id}/cancel", 999L)).andExpect(status().isNotFound());
     }
 
-    private Order createTestOrder() {
+    private Order createTestOrder()
+    {
         Order order = new Order();
         order.setCustomer(testCustomer);
         order.setStatus(OrderStatus.PENDING);
