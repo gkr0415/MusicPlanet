@@ -58,9 +58,13 @@ public class Artist
     public boolean equals(Object o)
     {
         if (this == o)
+        {
             return true;
+        }
         if (o == null || getClass() != o.getClass())
+        {
             return false;
+        }
         Artist artist = (Artist) o;
         return Objects.equals(id, artist.id);
     }

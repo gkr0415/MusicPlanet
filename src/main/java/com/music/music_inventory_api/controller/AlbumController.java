@@ -24,7 +24,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for Album operations. Provides endpoints for CRUD operations
@@ -40,7 +48,8 @@ public class AlbumController
     private final AlbumService albumService;
 
     @PostMapping
-    @Operation(summary = "Create a new album", description = "Creates a new album with the provided information. Requires valid artist ID and at least one genre ID.")
+    @Operation(summary = "Create a new album", description = "Creates a new album with the provided information. "
+            + "Requires valid artist ID and at least one genre ID.")
     @ApiResponses(value =
     {@ApiResponse(responseCode = "201", description = "Album created successfully", content = @Content(schema = @Schema(implementation = AlbumResponse.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input data"),
