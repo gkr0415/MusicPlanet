@@ -55,9 +55,13 @@ public class Genre
     public boolean equals(Object o)
     {
         if (this == o)
+        {
             return true;
+        }
         if (o == null || getClass() != o.getClass())
+        {
             return false;
+        }
         Genre genre = (Genre) o;
         return Objects.equals(id, genre.id);
     }
