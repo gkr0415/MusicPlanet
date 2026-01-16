@@ -38,7 +38,7 @@ class OrderMapperTest
         assertNotNull(response);
         assertEquals(order.getId(), response.getId());
         assertEquals(customer.getId(), response.getCustomerId());
-        assertEquals(customer.getFirstName(), response.getCustomerName());
+        assertEquals(customer.getFirstName() + " " + customer.getLastName(), response.getCustomerName());
         assertEquals(order.getTotalAmount(), response.getTotalAmount());
         assertEquals(order.getStatus(), response.getStatus());
     }
@@ -47,7 +47,7 @@ class OrderMapperTest
     void toResponseList_withValidOrderList_shouldReturnResponseList()
     {
         // Arrange
-        Customer customer = Customer.builder().id(1L).firstName("Test").build();
+        Customer customer = Customer.builder().id(1L).firstName("Test").lastName("User").build();
         List<Order> orders = Arrays.asList(
                 Order.builder().id(1L).customer(customer).totalAmount(new BigDecimal("10.00"))
                         .status(OrderStatus.PENDING).build(),

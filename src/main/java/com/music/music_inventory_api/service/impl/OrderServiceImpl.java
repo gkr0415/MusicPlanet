@@ -45,8 +45,8 @@ public class OrderServiceImpl implements OrderService
                 .orElseThrow(() -> new EntityNotFoundException("Customer", request.getCustomerId()));
 
         // Create order
-        Order order = Order.builder().customer(customer).status(OrderStatus.PENDING)
-                .orderDate(LocalDateTime.now()).totalAmount(BigDecimal.ZERO).build();
+        Order order = Order.builder().customer(customer).status(OrderStatus.PENDING).orderDate(LocalDateTime.now())
+                .totalAmount(BigDecimal.ZERO).build();
 
         // Process order items
         BigDecimal total = BigDecimal.ZERO;
@@ -59,8 +59,8 @@ public class OrderServiceImpl implements OrderService
             // Validate stock
             if (album.getStockQuantity() < itemRequest.getQuantity())
             {
-                throw new IllegalArgumentException("Insufficient stock for album: " + album.getTitle()
-                        + ". Available: " + album.getStockQuantity() + ", Requested: " + itemRequest.getQuantity());
+                throw new IllegalArgumentException("Insufficient stock for album: " + album.getTitle() + ". Available: "
+                        + album.getStockQuantity() + ", Requested: " + itemRequest.getQuantity());
             }
 
             // Calculate subtotal
@@ -94,8 +94,7 @@ public class OrderServiceImpl implements OrderService
     public OrderResponse getOrderById(Long id)
     {
         log.info("Fetching order with ID: {}", id);
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order", id));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order", id));
         return orderMapper.toResponse(order);
     }
 
@@ -113,8 +112,7 @@ public class OrderServiceImpl implements OrderService
     {
         log.info("Updating order ID: {} to status: {}", id, status);
 
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order", id));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order", id));
 
         // Validate status transition
         if (order.getStatus() == OrderStatus.CANCELLED || order.getStatus() == OrderStatus.DELIVERED)
@@ -135,8 +133,7 @@ public class OrderServiceImpl implements OrderService
     {
         log.info("Cancelling order with ID: {}", id);
 
-        Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order", id));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order", id));
 
         // Validate order can be cancelled
         if (order.getStatus() == OrderStatus.SHIPPED || order.getStatus() == OrderStatus.DELIVERED)
