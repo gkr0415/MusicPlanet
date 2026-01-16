@@ -13,8 +13,8 @@ public interface OrderMapper
 {
 
     @Mapping(source = "customer.id", target = "customerId")
-    @Mapping(source = "customer.firstName", target = "customerName")
-    @Mapping(target = "items", ignore = true)
+    @Mapping(target = "customerName", expression = "java(order.getCustomer().getFirstName() + \" \" + order.getCustomer().getLastName())")
+    @Mapping(source = "orderItems", target = "items")
     OrderResponse toResponse(Order order);
 
     @Mapping(source = "customerId", target = "customer.id")
