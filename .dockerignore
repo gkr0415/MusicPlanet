@@ -1,0 +1,24 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+*.iml
+.vscode
+
+# Build outputs
+target/
+
+# Frontend (separate Dockerfile)
+frontend/
+
+# CI/CD
+.github/
+
+# Docker files
+docker-compose*.yml
+
+# Docs
+docs/
+*.md
