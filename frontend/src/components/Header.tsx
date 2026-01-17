@@ -1,8 +1,17 @@
 import { AppBar, Toolbar, Typography, Button, Badge, IconButton, Box } from '@mui/material';
-import { ShoppingCart, Home, Album, Person } from '@mui/icons-material';
-import { Link as RouterLink } from 'react-router-dom';
+import { ShoppingCart, Home, Album, Person, Login, Logout } from '@mui/icons-material';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+    const navigate = useNavigate();
+    const { isAuthenticated, user, logout } = useAuth();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/');
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -37,15 +46,41 @@ const Header = () => {
                     </Button>
                 </Box>
 
+                {isAuthenticated && user && (
+                    <Typography variant="body2" sx={{ mr: 2 }}>
+                        Welcome, {user.firstName}
+                    </Typography>
+                )}
+
                 <IconButton
                     color="inherit"
                     component={RouterLink}
                     to="/cart"
+                    sx={{ mr: 1 }}
                 >
                     <Badge badgeContent={0} color="secondary">
                         <ShoppingCart />
                     </Badge>
                 </IconButton>
+
+                {isAuthenticated ? (
+                    <Button
+                        color="inherit"
+                        onClick={handleLogout}
+                        startIcon={<Logout />}
+                    >
+                        Logout
+                    </Button>
+                ) : (
+                    <Button
+                        color="inherit"
+                        component={RouterLink}
+                        to="/login"
+                        startIcon={<Login />}
+                    >
+                        Login
+                    </Button>
+                )}
             </Toolbar>
         </AppBar>
     );
