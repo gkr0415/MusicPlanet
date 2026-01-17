@@ -14,6 +14,8 @@ import com.music.music_inventory_api.dto.request.UpdateAlbumRequest;
 import com.music.music_inventory_api.dto.response.AlbumDetailResponse;
 import com.music.music_inventory_api.dto.response.AlbumResponse;
 import com.music.music_inventory_api.exception.EntityNotFoundException;
+import com.music.music_inventory_api.security.JwtAuthenticationFilter;
+import com.music.music_inventory_api.security.JwtUtil;
 import com.music.music_inventory_api.service.AlbumService;
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -51,6 +53,12 @@ class AlbumControllerTest
 
     @MockBean
     private AlbumService albumService;
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private JwtUtil jwtUtil;
 
     private CreateAlbumRequest createRequest;
     private UpdateAlbumRequest updateRequest;

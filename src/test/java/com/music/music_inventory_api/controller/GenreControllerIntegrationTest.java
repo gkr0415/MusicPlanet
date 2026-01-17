@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for GenreController.
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @Transactional
 public class GenreControllerIntegrationTest
