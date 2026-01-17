@@ -65,6 +65,7 @@ class OrderServiceImplTest
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
         testCustomer.setEmail("john@example.com");
+        testCustomer.setPassword("password123");
 
         // Create test artist
         Artist testArtist = new Artist();

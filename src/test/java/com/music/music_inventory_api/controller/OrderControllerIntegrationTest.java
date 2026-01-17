@@ -40,7 +40,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @Transactional
 class OrderControllerIntegrationTest
@@ -89,6 +89,7 @@ class OrderControllerIntegrationTest
         testCustomer.setFirstName("John");
         testCustomer.setLastName("Doe");
         testCustomer.setEmail("john.doe@example.com");
+        testCustomer.setPassword("password123");
         testCustomer.setPhone("123-456-7890");
         testCustomer.setAddress("123 Main St");
         testCustomer.setCity("New York");

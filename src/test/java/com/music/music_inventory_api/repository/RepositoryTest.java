@@ -151,6 +151,7 @@ class RepositoryTest
         customer1.setFirstName("John");
         customer1.setLastName("Doe");
         customer1.setEmail("john.doe@example.com");
+        customer1.setPassword("password123");
         customer1.setPhone("1234567890");
         customer1 = customerRepository.save(customer1);
 
@@ -158,6 +159,7 @@ class RepositoryTest
         customer2.setFirstName("Jane");
         customer2.setLastName("Smith");
         customer2.setEmail("jane.smith@example.com");
+        customer2.setPassword("password456");
         customer2.setPhone("0987654321");
         customer2 = customerRepository.save(customer2);
 

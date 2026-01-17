@@ -59,7 +59,7 @@ class CustomerServiceImplTest
     void setUp()
     {
         testCustomer = Customer.builder().id(1L).firstName("John").lastName("Doe").email("john@example.com")
-                .phone("1234567890").address("123 Main St").build();
+                .password("password123").phone("1234567890").address("123 Main St").build();
 
         testCustomerResponse = CustomerResponse.builder().id(1L).firstName("John").lastName("Doe")
                 .email("john@example.com").phone("1234567890").address("123 Main St").build();
@@ -193,7 +193,7 @@ class CustomerServiceImplTest
     void updateCustomer_withDuplicateEmail_shouldThrowIllegalArgumentException()
     {
         // Arrange
-        Customer anotherCustomer = Customer.builder().id(2L).email("jane@example.com").build();
+        Customer anotherCustomer = Customer.builder().id(2L).email("jane@example.com").password("password456").build();
         when(customerRepository.findById(1L)).thenReturn(Optional.of(testCustomer));
         when(customerRepository.findByEmailIgnoreCase(updateRequest.getEmail()))
                 .thenReturn(Optional.of(anotherCustomer));
