@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { authService } from '../services';
 
 interface User {
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(authService.getCurrentUser());
     }, []);
 
-    const login = (token: string, userData: User) => {
+    const login = (_token: string, userData: User) => {
         setIsAuthenticated(true);
         setUser(userData);
     };

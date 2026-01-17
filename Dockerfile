@@ -6,10 +6,12 @@ WORKDIR /app
 COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
+COPY checkstyle.xml .
+COPY eclipse-formatter.xml .
 RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B
 COPY src src
-RUN ./mvnw package -DskipTests -B
+RUN ./mvnw package -DskipTests -Dspotless.check.skip=true -Dcheckstyle.skip=true -B
 
 # Runtime 
 FROM eclipse-temurin:11-jre-alpine AS runtime

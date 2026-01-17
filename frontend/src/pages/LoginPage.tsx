@@ -46,7 +46,7 @@ const LoginPage = () => {
                 email: formData.email,
                 password: formData.password,
             });
-            setAuthLogin(response.token, response.user);
+            setAuthLogin(response.token, response.customer);
             navigate('/');
         } catch (err) {
             const apiError = err as ApiError;
