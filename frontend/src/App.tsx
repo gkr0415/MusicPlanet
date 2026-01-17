@@ -7,6 +7,8 @@ import HomePage from './pages/HomePage';
 import AlbumsPage from './pages/AlbumsPage';
 import ArtistsPage from './pages/ArtistsPage';
 import CartPage from './pages/CartPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
             <Route path="artists" element={<ArtistsPage />} />
             <Route path="cart" element={<CartPage />} />
           </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
         </Routes>
       </Router>
     </ThemeProvider>
