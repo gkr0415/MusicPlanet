@@ -21,11 +21,13 @@ public interface CustomerMapper
     CustomerDetailResponse toDetailResponse(Customer customer);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     Customer toEntity(CreateCustomerRequest request);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "password", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     void updateEntityFromRequest(UpdateCustomerRequest request, @MappingTarget Customer customer);

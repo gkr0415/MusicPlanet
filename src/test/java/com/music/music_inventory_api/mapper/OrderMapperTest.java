@@ -27,7 +27,7 @@ class OrderMapperTest
     void toResponse_withValidOrder_shouldReturnOrderResponse()
     {
         // Arrange
-        Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").build();
+        Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").password("pass").build();
         Order order = Order.builder().id(1L).customer(customer).orderDate(LocalDateTime.now())
                 .totalAmount(new BigDecimal("99.99")).status(OrderStatus.PENDING).build();
 
@@ -47,7 +47,7 @@ class OrderMapperTest
     void toResponseList_withValidOrderList_shouldReturnResponseList()
     {
         // Arrange
-        Customer customer = Customer.builder().id(1L).firstName("Test").lastName("User").build();
+        Customer customer = Customer.builder().id(1L).firstName("Test").lastName("User").password("pass").build();
         List<Order> orders = Arrays.asList(
                 Order.builder().id(1L).customer(customer).totalAmount(new BigDecimal("10.00"))
                         .status(OrderStatus.PENDING).build(),

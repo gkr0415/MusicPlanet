@@ -132,8 +132,9 @@ class EntityTest
         String postalCode = "10001";
 
         // Act
-        Customer customer = Customer.builder().firstName(firstName).lastName(lastName).email(email).phone(phone)
-                .address(address).city(city).country(country).postalCode(postalCode).build();
+        Customer customer = Customer.builder().firstName(firstName).lastName(lastName).email(email)
+                .password("password123").phone(phone).address(address).city(city).country(country)
+                .postalCode(postalCode).build();
 
         // Assert
         assertEquals(firstName, customer.getFirstName());
@@ -152,7 +153,7 @@ class EntityTest
     {
         // Arrange
         Customer customer = Customer.builder().id(1L).firstName("John").lastName("Doe").email("john.doe@example.com")
-                .build();
+                .password("password123").build();
         OrderStatus status = OrderStatus.PENDING;
         BigDecimal totalAmount = new BigDecimal("39.98");
         LocalDateTime orderDate = LocalDateTime.now();
@@ -205,8 +206,8 @@ class EntityTest
     void orderOrderItemRelationship_whenAddingAndRemovingItems_shouldManageBidirectionalRelationship()
     {
         // Arrange
-        Order order = Order.builder().customer(Customer.builder().id(1L).build()).status(OrderStatus.PENDING)
-                .totalAmount(BigDecimal.ZERO).orderDate(LocalDateTime.now()).build();
+        Order order = Order.builder().customer(Customer.builder().id(1L).password("pass").build())
+                .status(OrderStatus.PENDING).totalAmount(BigDecimal.ZERO).orderDate(LocalDateTime.now()).build();
         Album album = Album.builder().id(1L).title("Abbey Road").build();
         OrderItem orderItem = OrderItem.builder().album(album).quantity(1).unitPrice(new BigDecimal("19.99"))
                 .subtotal(new BigDecimal("19.99")).build();

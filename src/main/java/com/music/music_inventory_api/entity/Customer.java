@@ -51,6 +51,11 @@ public class Customer
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Column(nullable = false)
+    private String password;
+
     @Size(max = 20, message = "Phone must not exceed 20 characters")
     @Column(length = 20)
     private String phone;

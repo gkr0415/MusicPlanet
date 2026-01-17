@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for ArtistController.
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @Transactional
 public class ArtistControllerIntegrationTest

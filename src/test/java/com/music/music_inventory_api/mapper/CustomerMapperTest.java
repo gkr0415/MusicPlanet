@@ -25,7 +25,7 @@ class CustomerMapperTest
     {
         // Arrange
         Customer customer = Customer.builder().id(1L).email("test@example.com").firstName("John").lastName("Doe")
-                .phone("1234567890").city("New York").country("USA").build();
+                .password("password123").phone("1234567890").city("New York").country("USA").build();
 
         // Act
         CustomerResponse response = customerMapper.toResponse(customer);
@@ -63,8 +63,10 @@ class CustomerMapperTest
     {
         // Arrange
         List<Customer> customers = Arrays.asList(
-                Customer.builder().id(1L).email("user1@test.com").firstName("User").lastName("One").build(),
-                Customer.builder().id(2L).email("user2@test.com").firstName("User").lastName("Two").build());
+                Customer.builder().id(1L).email("user1@test.com").firstName("User").lastName("One").password("pass1")
+                        .build(),
+                Customer.builder().id(2L).email("user2@test.com").firstName("User").lastName("Two").password("pass2")
+                        .build());
 
         // Act
         List<CustomerResponse> responses = customerMapper.toResponseList(customers);
