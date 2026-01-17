@@ -28,7 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for SongController.
  */
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @ActiveProfiles("test")
 @Transactional
 public class SongControllerIntegrationTest

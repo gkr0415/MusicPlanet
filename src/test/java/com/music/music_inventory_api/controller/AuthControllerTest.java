@@ -10,6 +10,8 @@ import com.music.music_inventory_api.dto.request.LoginRequest;
 import com.music.music_inventory_api.dto.request.RegisterRequest;
 import com.music.music_inventory_api.dto.response.AuthResponse;
 import com.music.music_inventory_api.exception.EntityNotFoundException;
+import com.music.music_inventory_api.security.JwtAuthenticationFilter;
+import com.music.music_inventory_api.security.JwtUtil;
 import com.music.music_inventory_api.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +39,12 @@ class AuthControllerTest
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @MockBean
+    private JwtUtil jwtUtil;
 
     private RegisterRequest registerRequest;
     private LoginRequest loginRequest;
