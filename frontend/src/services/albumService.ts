@@ -17,11 +17,14 @@ export interface Album {
     id: number;
     title: string;
     artist: Artist;
-    genre: Genre;
+    genres: Genre[];
     releaseDate: string;
     price: number;
     stockQuantity: number;
-    imageUrl?: string;
+    coverImageUrl?: string;
+    description?: string;
+    format?: string;
+    label?: string;
 }
 
 export interface CreateAlbumRequest {
@@ -48,8 +51,8 @@ class AlbumService {
     private readonly endpoint = '/albums';
 
     async getAll(): Promise<Album[]> {
-        const response = await api.get<Album[]>(this.endpoint);
-        return response.data;
+        const response = await api.get<any>(this.endpoint);
+        return response.data.content || response.data;
     }
 
     async getById(id: number): Promise<Album> {

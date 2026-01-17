@@ -8,7 +8,7 @@ import {
     type Album,
     type CreateOrderRequest,
     type ApiError,
-} from './services';
+} from './index';
 
 export const fetchAllArtists = async (): Promise<Artist[]> => {
     try {
