@@ -14,9 +14,12 @@ import {
     CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff, Login as LoginIcon } from '@mui/icons-material';
+import { authService, type ApiError } from '../services';
+import { useAuth } from '../context/AuthContext';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const { login: setAuthLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -39,13 +42,15 @@ const LoginPage = () => {
         setError(null);
 
         try {
-            // TODO: Implement API call
-            console.log('Login data:', formData);
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            const response = await authService.login({
+                email: formData.email,
+                password: formData.password,
+            });
+            setAuthLogin(response.token, response.user);
             navigate('/');
         } catch (err) {
-            setError('Invalid email or password');
+            const apiError = err as ApiError;
+            setError(apiError.message || 'Invalid email or password');
         } finally {
             setLoading(false);
         }

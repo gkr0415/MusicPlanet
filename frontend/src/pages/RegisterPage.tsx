@@ -14,9 +14,12 @@ import {
     CircularProgress,
 } from '@mui/material';
 import { Visibility, VisibilityOff, PersonAdd } from '@mui/icons-material';
+import { authService, type ApiError } from '../services';
+import { useAuth } from '../context/AuthContext';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
+    const { login: setAuthLogin } = useAuth();
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -51,7 +54,7 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
@@ -60,13 +63,17 @@ const RegisterPage = () => {
         setError(null);
 
         try {
-            // TODO: Implement API call
-            console.log('Register data:', formData);
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1000));
+            const response = await authService.register({
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+            });
+            setAuthLogin(response.token, response.user);
             navigate('/');
         } catch (err) {
-            setError('Registration failed. Please try again.');
+            const apiError = err as ApiError;
+            setError(apiError.message || 'Registration failed. Please try again.');
         } finally {
             setLoading(false);
         }
