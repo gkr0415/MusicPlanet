@@ -55,27 +55,9 @@ docker-compose down
 
 ## Pull from GitHub Container Registry
 
-```bash
 # Login
 echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
 
 # Pull
 docker pull ghcr.io/OWNER/REPO/backend:latest
 docker pull ghcr.io/OWNER/REPO/frontend:latest
-```
-
-## Production Example
-
-```yaml
-services:
-  backend:
-    image: ghcr.io/your-org/musicplanet/backend:latest
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/musicplanet
-      JWT_SECRET: your-production-secret
-    
-  frontend:
-    image: ghcr.io/your-org/musicplanet/frontend:latest
-    ports:
-      - "80:80"
-```
