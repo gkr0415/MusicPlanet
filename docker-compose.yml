@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: musicplanet-db
+    environment:
+      POSTGRES_DB: musicplanet
+      POSTGRES_USER: musicplanet
+      POSTGRES_PASSWORD: musicplanet123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U musicplanet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: musicplanet-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/musicplanet
+      SPRING_DATASOURCE_USERNAME: musicplanet
+      SPRING_DATASOURCE_PASSWORD: musicplanet123
+      JWT_SECRET: mySecretKeyForJWTtokenGenerationMustBeLongEnough256bits
+      SPRING_PROFILES_ACTIVE: prod
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8081/api
+    container_name: musicplanet-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+
+volumes:
+  postgres_data:
