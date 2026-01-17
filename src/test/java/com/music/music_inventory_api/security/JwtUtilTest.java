@@ -21,7 +21,7 @@ class JwtUtilTest
     void setUp()
     {
         jwtUtil = new JwtUtil();
-        
+
         ReflectionTestUtils.setField(jwtUtil, "secret",
                 "testSecretKeyForJWTtokenGenerationMustBeLongEnough256bitsForHS256Algorithm");
         ReflectionTestUtils.setField(jwtUtil, "expiration", 86400000L);
@@ -181,7 +181,7 @@ class JwtUtilTest
     {
         // Arrange
         String token = jwtUtil.generateToken(userDetails);
-        
+
         String tamperedToken = token.substring(0, token.length() - 5) + "XXXXX";
 
         // Act
