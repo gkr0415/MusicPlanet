@@ -33,6 +33,8 @@ public class SecurityConfig
                 .antMatchers("/api/auth/**").permitAll()
                 // Public endpoints - Swagger/OpenAPI
                 .antMatchers("/swagger-ui/**", "/swagger-ui.html", "/api-docs/**", "/v3/api-docs/**").permitAll()
+                // Public endpoints - Actuator health check
+                .antMatchers("/actuator/**").permitAll()
                 // Public endpoints - allow GET requests to browse catalog
                 .antMatchers(HttpMethod.GET, "/api/albums/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/artists/**").permitAll().antMatchers(HttpMethod.GET, "/api/songs/**")
