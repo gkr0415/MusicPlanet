@@ -20,8 +20,8 @@ class GenreService {
     private readonly endpoint = '/genres';
 
     async getAll(): Promise<Genre[]> {
-        const response = await api.get<Genre[]>(this.endpoint);
-        return response.data;
+        const response = await api.get<any>(this.endpoint);
+        return response.data.content || response.data;
     }
 
     async getById(id: number): Promise<Genre> {
